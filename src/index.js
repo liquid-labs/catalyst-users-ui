@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+export * from './actions/sessionActions'
+export * from './reducers/sessionReducer'
+
+/*import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import styles from './styles.css'
@@ -19,4 +22,4 @@ export default class ExampleComponent extends Component {
       </div>
     )
   }
-}
+}*/
