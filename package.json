@@ -1,6 +1,6 @@
 {
   "name": "@liquid-labs/catalyst-app-users",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "API and UI enabling user common user features such as login and account management.",
   "author": "zanerock",
   "license": "ISC",

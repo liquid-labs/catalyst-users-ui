@@ -1,5 +1,6 @@
-export * from './actions/sessionActions'
 export * from './reducers/sessionReducer'
+import * as sessionActions from './actions/sessionActions'
+export { sessionActions }
 
 /*import React, { Component } from 'react'
 import PropTypes from 'prop-types'
