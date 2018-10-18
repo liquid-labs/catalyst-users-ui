@@ -9,10 +9,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
 import { appActions } from '@liquid-labs/catalyst-app-core'
-import * as unoRoutes from '../../app/unoRoutes'
 
 const SignOutButton = ({dispatch, history}) => (
-  <IconButton onClick={() => { dispatch.reset(); fireauth.signOut().then(history.push(unoRoutes.LANDING)) } }>
+  <IconButton onClick={() => { dispatch.reset(); fireauth.signOut().then(history.push('/')) } }>
     <ExitToAppIcon />
   </IconButton>
 )

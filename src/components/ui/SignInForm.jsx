@@ -6,13 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import LabeledBox from '../layouts/LabeledBox';
-import commonStyles from '../layouts/commonStyles'
+import LabeledBox from './LabeledBox';
 import { ValidInput } from '@liquid-labs/react-validation'
 import { isEmail } from '@liquid-labs/validators'
-import * as unoRoutes from '../../app/unoRoutes';
 
-const SignInForm = ({email, password, onSubmit, onInputChange, error, fieldWatcher, classes}) => {
+export const SignInForm = ({email, password, onSubmit, onInputChange, error, fieldWatcher, classes}) => {
   const commonFieldProps = {
     onInputChange: onInputChange,
     required: true,
@@ -22,7 +20,7 @@ const SignInForm = ({email, password, onSubmit, onInputChange, error, fieldWatch
   };
 
   return (
-    <LabeledBox className={classes.centeredRoot} title="Sign in">
+    <LabeledBox className={null/*classes.centeredRoot*/} title="Sign in">
       <form onSubmit={onSubmit}>
         <Grid container spacing={16}>
           {error
@@ -43,20 +41,18 @@ const SignInForm = ({email, password, onSubmit, onInputChange, error, fieldWatch
             type="password"
             {...commonFieldProps}
           />
-          <Grid item xs={12} className={classes.controls}>
+          <Grid item xs={12} className={null/*classes.controls*/}>
             <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign In</Button>
           </Grid>
           <Grid item xs={12}>
-            <Link to={unoRoutes.PASSWORD_FORGET}>Forgot Password?</Link>
+            <Link to={'/pw-forget'}>Forgot Password?</Link>
           </Grid>
           <Grid item xs={12}>
             Need an account?
-            <Link to={unoRoutes.SIGN_UP}>Sign Up</Link>
+            <Link to={'/'}>Sign Up</Link>
           </Grid>
         </Grid>
       </form>
     </LabeledBox>
   );
 }
-
-export default withStyles(commonStyles)(SignInForm);

@@ -6,7 +6,7 @@ import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
-import SignInForm from './SignInForm'
+import { SignInForm } from './SignInForm'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
 

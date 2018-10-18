@@ -7,13 +7,11 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles';
 
-import LabeledBox from '../layouts/LabeledBox'
-import commonStyles from '../layouts/commonStyles'
+import LabeledBox from './LabeledBox'
 import { ValidInput } from '@liquid-labs/react-validation'
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
-import * as unoRoutes from '../../app/unoRoutes'
 
-const SignUp = ({
+export const SignUp = ({
   onSubmit, onInputChange, // handling functions
   fieldWatcher,
   username, email, passwordOne, passwordTwo, // data values
@@ -29,7 +27,7 @@ const SignUp = ({
   };
 
   return (
-    <LabeledBox className={classes.centeredRoot} title="Sign up">
+    <LabeledBox className={null/*classes.centeredRoot*/} title="Sign up">
       <form onSubmit={onSubmit}>
         <Grid container spacing={16}>
           {error
@@ -65,7 +63,7 @@ const SignUp = ({
             validate={fieldsMatch('Passwords', passwordOne)}
             {...commonFieldProps}
           />
-          <Grid item xs={12} className={classes.controls}>
+          <Grid item xs={12} className={null/*classes.controls*/}>
             <Button color="secondary" component={Link} to={unoRoutes.SIGN_IN}>cancel</Button>
             <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign Up</Button>
           </Grid>
@@ -85,5 +83,3 @@ SignUp.propTypes = {
   passwordTwo: PropTypes.string.isRequired,
   error: PropTypes.object
 };
-
-export default withStyles(commonStyles)(SignUp)

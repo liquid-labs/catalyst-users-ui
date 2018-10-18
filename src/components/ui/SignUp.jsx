@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
-import SignUpForm from './SignUpForm'
+import { SignUpForm } from './SignUpForm'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
-import * as unoRoutes from '../../app/unoRoutes'
 import pick from 'lodash.pick'
 
 const INITIAL_STATE = {
@@ -39,7 +38,7 @@ class SignUp extends Component {
     fireauth.createUserWithEmailAndPassword(email, passwordOne, username)
       .then(() =>{
         this.setState(() => ({ ...INITIAL_STATE }))
-        history.push(unoRoutes.DASHBOARD)
+        history.push('/')
       })
       .catch(error => {
         this.setState(() => ({ error: error }))

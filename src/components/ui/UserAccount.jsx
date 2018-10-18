@@ -5,8 +5,8 @@ import { compose } from 'recompose'
 import { PasswordForgetForm } from './PasswordForget'
 import PasswordChangeForm from './PasswordChange'
 
-import checkAccess from '../users/checkAccess'
-import withAuthInfo from '../users/withAuthInfo'
+import { checkAccess } from '../hocs/checkAccess'
+import { withAuthInfo } from '../hocs/withAuthInfo'
 
 const UserAccount = ({ authUser }) =>
     <div>
