@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -15,6 +16,11 @@ const SignOutButton = ({dispatch, history}) => (
     <ExitToAppIcon />
   </IconButton>
 )
+
+SignOutButton.propTypes = {
+  dispatch : PropTypes.func.isRequired,
+  history  : PropTypes.object.isRequired
+}
 
 const mapDispatchToProps = (dispatch) => ({ dispatch : {
   reset : () => dispatch(appActions.reset())

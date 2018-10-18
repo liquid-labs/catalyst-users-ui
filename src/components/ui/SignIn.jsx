@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
@@ -67,6 +68,13 @@ class SignInBase extends React.Component {
   }
 }
 
+SignInBase.propTypes = {
+  defaultPostAuthDestination : PropTypes.string.isRequired,
+  history                    : PropTypes.object.isRequired,
+  location                   : PropTypes.object.isRequired,
+  resetContext               : PropTypes.func.isRequired
+}
+
 const mapDispatchToProps = (dispatch) => ({
   resetContext : () => dispatch(contextActions.resetContext())
 })
@@ -74,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
 export const SignIn = compose(
   withRouter,
   connect(null, mapDispatchToProps)
-)(SignIn)
+)(SignInBase)

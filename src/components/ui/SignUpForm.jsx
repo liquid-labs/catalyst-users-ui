@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles';
 
 import LabeledBox from './LabeledBox'
 import { ValidInput } from '@liquid-labs/react-validation'
@@ -15,8 +14,7 @@ export const SignUpForm = ({
   onSubmit, onInputChange, // handling functions
   fieldWatcher,
   username, email, passwordOne, passwordTwo, // data values
-  error, // error status
-  classes // from 'withStyles'
+  error // error status
 }) => {
 
   const commonFieldProps = {
@@ -64,7 +62,7 @@ export const SignUpForm = ({
               {...commonFieldProps}
           />
           <Grid item xs={12} className={null/*classes.controls*/}>
-            <Button color="secondary" component={Link} to={unoRoutes.SIGN_IN}>cancel</Button>
+            <Button color="secondary" component={Link} to={'/'}>cancel</Button>
             <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign Up</Button>
           </Grid>
         </Grid>

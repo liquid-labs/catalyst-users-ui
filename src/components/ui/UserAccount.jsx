@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { compose } from 'recompose'
 
@@ -12,12 +13,16 @@ const UserAccount = ({ authUser }) =>
   <div>
     <h1>Account: {authUser.email}</h1>
     <PasswordForgetForm />
-    <PasswordChangeForm />
+    <PasswordChange />
   </div>
 
 const mapStateToProps = (state) => ({
   authUser : state.sessionState.authUser,
 });
+
+UserAccount.propTypes = {
+  authUser : PropTypes.object.isRequired
+}
 
 const authCondition = ({authUser}) => Boolean(authUser)
 
