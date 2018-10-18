@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose'
 
 import { PasswordForgetForm } from './PasswordForget'
-import PasswordChangeForm from './PasswordChange'
+import { PasswordChange } from './PasswordChange'
 
 import { checkAccess } from '../hocs/checkAccess'
 import { withAuthInfo } from '../hocs/withAuthInfo'
