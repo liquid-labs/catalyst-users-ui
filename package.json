@@ -1,6 +1,6 @@
 {
   "name": "@liquid-labs/catalyst-app-users",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "API and UI enabling user common user features such as login and account management.",
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "ISC",
@@ -21,8 +21,14 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
+    "@liquid-labs/catalyst-firewrap": "0.0.1",
     "@liquid-labs/catalyst-app-core": "0.0.2",
+    "@liquid-labs/mui-extensions": "0.0.4",
+    "@liquid-labs/react-validation": "0.0.5",
+    "@liquid-labs/validators": "0.0.3",
     "@material-ui/core": "^1.5.1 || 3.x",
+    "classnames": "^2.2.6",
+    "lodash.pick": "^4.4.0",
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0",
@@ -30,7 +36,7 @@
     "react-router-dom": "4.x"
   },
   "devDependencies": {
-    "@liquid-labs/catalyst-scripts": "0.0.6",
+    "@liquid-labs/catalyst-scripts": "0.0.7",
     "cross-env": "^5.1.4",
     "gh-pages": "^1.2.0",
     "react": "^16.5.2",
@@ -40,12 +46,5 @@
   "files": [
     "dist/"
   ],
-  "dependencies": {
-    "@liquid-labs/catalyst-firewrap": "0.0.1",
-    "@liquid-labs/mui-extensions": "0.0.3",
-    "@liquid-labs/react-validation": "0.0.4",
-    "@liquid-labs/validators": "0.0.3",
-    "classnames": "^2.2.6",
-    "lodash.pick": "^4.4.0"
-  }
+  "dependencies": {}
 }
