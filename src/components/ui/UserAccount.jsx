@@ -9,7 +9,7 @@ import { PasswordChange } from './PasswordChange'
 import { checkAccess } from '../hocs/checkAccess'
 import { withAuthInfo } from '../hocs/withAuthInfo'
 
-const UserAccount = ({ authUser }) =>
+const UserAccountBase = ({ authUser }) =>
   <div>
     <h1>Account: {authUser.email}</h1>
     <PasswordForgetForm />
@@ -20,14 +20,14 @@ const mapStateToProps = (state) => ({
   authUser : state.sessionState.authUser,
 });
 
-UserAccount.propTypes = {
+UserAccountBase.propTypes = {
   authUser : PropTypes.object.isRequired
 }
 
 const authCondition = ({authUser}) => Boolean(authUser)
 
-export default compose(
+export const UserAccount = compose(
   withAuthInfo,
   checkAccess(authCondition),
   connect(mapStateToProps)
-)(UserAccount)
+)(UserAccountBase)

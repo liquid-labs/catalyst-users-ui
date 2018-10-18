@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => ({ dispatch : {
   reset : () => dispatch(appActions.reset())
 }})
 
-export default compose(
+export const SignOut = compose(
   withRouter,
   connect(null, mapDispatchToProps)
 )(SignOutButton);

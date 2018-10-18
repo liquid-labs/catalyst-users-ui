@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   error       : null
 }
 
-class SignUp extends Component {
+class SignUpBase extends Component {
   constructor(props) {
     super(props);
 
@@ -56,4 +56,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(SignUp)
+export const SignUp = withRouter(SignUpBase)
