@@ -16,10 +16,10 @@ export const withAuthInfo = (Component) => {
   }
 
   const mapStateToProps = (state) => ({
-    authResolved: state.sessionState.authResolved,
-    authUser: state.sessionState.authUser,
-    authToken: state.sessionState.authToken,
-    claims: state.sessionState.claims
+    authResolved : state.sessionState.authResolved,
+    authUser     : state.sessionState.authUser,
+    authToken    : state.sessionState.authToken,
+    claims       : state.sessionState.claims
   });
 
   return connect(mapStateToProps)(WithAuthInfo);

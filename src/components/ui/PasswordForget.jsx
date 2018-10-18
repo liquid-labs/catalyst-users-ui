@@ -9,12 +9,12 @@ const PasswordForget = () =>
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName] : value,
 });
 
 const INITIAL_STATE = {
-  email: '',
-  error: null,
+  email : '',
+  error : null,
 };
 
 class PasswordForgetForm extends Component {
@@ -49,10 +49,10 @@ class PasswordForgetForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          value={this.state.email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
+            value={this.state.email}
+            onChange={event => this.setState(byPropKey('email', event.target.value))}
+            type="text"
+            placeholder="Email Address"
         />
         <button disabled={isInvalid} type="submit">
           Reset My Password

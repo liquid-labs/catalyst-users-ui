@@ -11,9 +11,9 @@ import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
+  email    : '',
+  password : '',
+  error    : null,
 };
 
 class SignInBase extends React.Component {
@@ -49,7 +49,7 @@ class SignInBase extends React.Component {
         history.push(destination);
       })
       .catch(error => {
-        this.setState({error: error});
+        this.setState({error : error});
       });
 
     event.preventDefault();
@@ -58,17 +58,17 @@ class SignInBase extends React.Component {
   render() {
     const { email, password, error } = this.state;
     return <SignInForm
-      email={email}
-      password={password}
-      error={error}
-      onSubmit={this.onSubmit}
-      onInputChange={this.onInputChange}
-      fieldWatcher={this.fieldWatcher} />
+        email={email}
+        password={password}
+        error={error}
+        onSubmit={this.onSubmit}
+        onInputChange={this.onInputChange}
+        fieldWatcher={this.fieldWatcher} />
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  resetContext: () => dispatch(contextActions.resetContext())
+  resetContext : () => dispatch(contextActions.resetContext())
 })
 
 export const SignIn = compose(

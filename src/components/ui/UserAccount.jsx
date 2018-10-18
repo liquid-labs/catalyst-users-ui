@@ -9,20 +9,20 @@ import { checkAccess } from '../hocs/checkAccess'
 import { withAuthInfo } from '../hocs/withAuthInfo'
 
 const UserAccount = ({ authUser }) =>
-    <div>
-      <h1>Account: {authUser.email}</h1>
-      <PasswordForgetForm />
-      <PasswordChangeForm />
-    </div>
+  <div>
+    <h1>Account: {authUser.email}</h1>
+    <PasswordForgetForm />
+    <PasswordChangeForm />
+  </div>
 
-  const mapStateToProps = (state) => ({
-    authUser: state.sessionState.authUser,
-  });
+const mapStateToProps = (state) => ({
+  authUser : state.sessionState.authUser,
+});
 
-  const authCondition = ({authUser}) => Boolean(authUser)
+const authCondition = ({authUser}) => Boolean(authUser)
 
-  export default compose(
-    withAuthInfo,
-    checkAccess(authCondition),
-    connect(mapStateToProps)
-  )(UserAccount)
+export default compose(
+  withAuthInfo,
+  checkAccess(authCondition),
+  connect(mapStateToProps)
+)(UserAccount)

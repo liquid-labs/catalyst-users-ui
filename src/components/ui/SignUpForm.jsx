@@ -17,13 +17,13 @@ export const SignUpForm = ({
   username, email, passwordOne, passwordTwo, // data values
   error, // error status
   classes // from 'withStyles'
-  }) => {
+}) => {
 
   const commonFieldProps = {
-    onInputChange: onInputChange,
-    required: true,
-    gridded: {xs: 12},
-    fieldWatcher: fieldWatcher
+    onInputChange : onInputChange,
+    required      : true,
+    gridded       : {xs : 12},
+    fieldWatcher  : fieldWatcher
   };
 
   return (
@@ -32,36 +32,36 @@ export const SignUpForm = ({
         <Grid container spacing={16}>
           {error
             ? <Grid item xs={12}>
-                <Typography color="error">{error.message}</Typography>
-              </Grid>
+              <Typography color="error">{error.message}</Typography>
+            </Grid>
             : null
           }
           <ValidInput
-            label="Full name"
-            propName="username"
-            value={username}
-            {...commonFieldProps}
+              label="Full name"
+              propName="username"
+              value={username}
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Email"
-            value={email}
-            validate={isEmail}
-            {...commonFieldProps}
+              label="Email"
+              value={email}
+              validate={isEmail}
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Password"
-            propName="passwordOne"
-            value={passwordOne}
-            type="password"
-            {...commonFieldProps}
+              label="Password"
+              propName="passwordOne"
+              value={passwordOne}
+              type="password"
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Confirm password"
-            propName="passwordTwo"
-            value={passwordTwo}
-            type="password"
-            validate={fieldsMatch('Passwords', passwordOne)}
-            {...commonFieldProps}
+              label="Confirm password"
+              propName="passwordTwo"
+              value={passwordTwo}
+              type="password"
+              validate={fieldsMatch('Passwords', passwordOne)}
+              {...commonFieldProps}
           />
           <Grid item xs={12} className={null/*classes.controls*/}>
             <Button color="secondary" component={Link} to={unoRoutes.SIGN_IN}>cancel</Button>
@@ -74,12 +74,12 @@ export const SignUpForm = ({
 }
 
 SignUpForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
-  username: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  passwordOne: PropTypes.string.isRequired,
-  passwordTwo: PropTypes.string.isRequired,
-  error: PropTypes.object
+  onSubmit      : PropTypes.func.isRequired,
+  onInputChange : PropTypes.func.isRequired,
+  classes       : PropTypes.object.isRequired,
+  username      : PropTypes.string.isRequired,
+  email         : PropTypes.string.isRequired,
+  passwordOne   : PropTypes.string.isRequired,
+  passwordTwo   : PropTypes.string.isRequired,
+  error         : PropTypes.object
 };
