@@ -5,25 +5,23 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles';
 
 import LabeledBox from './LabeledBox'
 import { ValidInput } from '@liquid-labs/react-validation'
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
-export const SignUp = ({
+export const SignUpForm = ({
   onSubmit, onInputChange, // handling functions
   fieldWatcher,
   username, email, passwordOne, passwordTwo, // data values
-  error, // error status
-  classes // from 'withStyles'
-  }) => {
+  error // error status
+}) => {
 
   const commonFieldProps = {
-    onInputChange: onInputChange,
-    required: true,
-    gridded: {xs: 12},
-    fieldWatcher: fieldWatcher
+    onInputChange : onInputChange,
+    required      : true,
+    gridded       : {xs : 12},
+    fieldWatcher  : fieldWatcher
   };
 
   return (
@@ -32,39 +30,39 @@ export const SignUp = ({
         <Grid container spacing={16}>
           {error
             ? <Grid item xs={12}>
-                <Typography color="error">{error.message}</Typography>
-              </Grid>
+              <Typography color="error">{error.message}</Typography>
+            </Grid>
             : null
           }
           <ValidInput
-            label="Full name"
-            propName="username"
-            value={username}
-            {...commonFieldProps}
+              label="Full name"
+              propName="username"
+              value={username}
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Email"
-            value={email}
-            validate={isEmail}
-            {...commonFieldProps}
+              label="Email"
+              value={email}
+              validate={isEmail}
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Password"
-            propName="passwordOne"
-            value={passwordOne}
-            type="password"
-            {...commonFieldProps}
+              label="Password"
+              propName="passwordOne"
+              value={passwordOne}
+              type="password"
+              {...commonFieldProps}
           />
           <ValidInput
-            label="Confirm password"
-            propName="passwordTwo"
-            value={passwordTwo}
-            type="password"
-            validate={fieldsMatch('Passwords', passwordOne)}
-            {...commonFieldProps}
+              label="Confirm password"
+              propName="passwordTwo"
+              value={passwordTwo}
+              type="password"
+              validate={fieldsMatch('Passwords', passwordOne)}
+              {...commonFieldProps}
           />
           <Grid item xs={12} className={null/*classes.controls*/}>
-            <Button color="secondary" component={Link} to={unoRoutes.SIGN_IN}>cancel</Button>
+            <Button color="secondary" component={Link} to={'/'}>cancel</Button>
             <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign Up</Button>
           </Grid>
         </Grid>
@@ -73,13 +71,13 @@ export const SignUp = ({
   )
 }
 
-SignUp.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
-  username: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  passwordOne: PropTypes.string.isRequired,
-  passwordTwo: PropTypes.string.isRequired,
-  error: PropTypes.object
+SignUpForm.propTypes = {
+  onSubmit      : PropTypes.func.isRequired,
+  onInputChange : PropTypes.func.isRequired,
+  classes       : PropTypes.object.isRequired,
+  username      : PropTypes.string.isRequired,
+  email         : PropTypes.string.isRequired,
+  passwordOne   : PropTypes.string.isRequired,
+  passwordTwo   : PropTypes.string.isRequired,
+  error         : PropTypes.object
 };

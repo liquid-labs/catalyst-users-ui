@@ -3,13 +3,13 @@ import React, { Component } from 'react'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName] : value,
 });
 
 const INITIAL_STATE = {
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
+  passwordOne : '',
+  passwordTwo : '',
+  error       : null,
 };
 
 export class PasswordChange extends Component {
@@ -41,22 +41,22 @@ export class PasswordChange extends Component {
     } = this.state;
 
     const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '';
+      passwordOne !== passwordTwo
+      || passwordOne === '';
 
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="New Password"
+            value={passwordOne}
+            onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+            type="password"
+            placeholder="New Password"
         />
         <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm New Password"
+            value={passwordTwo}
+            onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+            type="password"
+            placeholder="Confirm New Password"
         />
         <button disabled={isInvalid} type="submit">
           Reset My Password

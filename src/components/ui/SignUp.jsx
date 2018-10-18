@@ -6,11 +6,11 @@ import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validatio
 import pick from 'lodash.pick'
 
 const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null
+  username    : '',
+  email       : '',
+  passwordOne : '',
+  passwordTwo : '',
+  error       : null
 }
 
 class SignUp extends Component {
@@ -41,7 +41,7 @@ class SignUp extends Component {
         history.push('/')
       })
       .catch(error => {
-        this.setState(() => ({ error: error }))
+        this.setState(() => ({ error : error }))
       })
 
     event.preventDefault()
@@ -50,9 +50,9 @@ class SignUp extends Component {
   render() {
     const stateVars = pick(this.state, 'email', 'username', 'passwordOne', 'passwordTwo', 'error');
     return <SignUpForm {...stateVars}
-      fieldWatcher={this.fieldWatcher}
-      onSubmit={this.onSubmit}
-      onInputChange={this.onInputChange} />
+        fieldWatcher={this.fieldWatcher}
+        onSubmit={this.onSubmit}
+        onInputChange={this.onInputChange} />
   }
 }
 

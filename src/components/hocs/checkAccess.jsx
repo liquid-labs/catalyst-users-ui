@@ -7,7 +7,7 @@ import { appActions } from '@liquid-labs/catalyst-app-core'
 import pick from 'lodash.pick'
 
 const mapDispatchToProps = (dispatch) => ({
-  setErrorMessage: (msg) => dispatch(appActions.setErrorMessage(msg))
+  setErrorMessage : (msg) => dispatch(appActions.setErrorMessage(msg))
 })
 
 export const checkAccess = (accessCheck) =>
@@ -15,9 +15,9 @@ export const checkAccess = (accessCheck) =>
     withProps((props) => {
       const result = accessCheck(props)
       const resultProps = {
-        accessGranted: false,
-        denialReason: "Unauthorized or bad URL.",
-        redirectPath: '/'
+        accessGranted : false,
+        denialReason  : "Unauthorized or bad URL.",
+        redirectPath  : '/'
       }
       if (result === true) {
         resultProps.accessGranted = true
