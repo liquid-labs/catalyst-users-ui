@@ -1,85 +1,57 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'recompose'
-import qs from 'query-string'
+import { Link } from 'react-router-dom'
 
-import { contextActions } from '@liquid-labs/catalyst-app-core'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
-import { SignInForm } from './SignInForm'
-import { fireauth } from '@liquid-labs/catalyst-firewrap'
-import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
+import LabeledBox from './LabeledBox'
+import { ValidInput } from '@liquid-labs/react-validation'
+import { isEmail } from '@liquid-labs/validators'
 
-const INITIAL_STATE = {
-  email    : '',
-  password : '',
-  error    : null,
-};
+export const SignIn = ({email, password, onSubmit, onInputChange, error, fieldWatcher, classes}) => {
+  const commonFieldProps = {
+    onInputChange : onInputChange,
+    required      : true,
+    gridded       : {xs : 12},
+    fieldWatcher  : fieldWatcher,
+    required      : true // eslint-disable-line no-dupe-keys
+  };
 
-class SignInBase extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-
-    this.fieldWatcher = getFieldWatcher();
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onInputChange = bindOnInputChange(this);
-  }
-
-  onSubmit = (event) => {
-    const {
-      email,
-      password,
-    } = this.state;
-
-    const {
-      history,
-      defaultPostAuthDestination,
-      resetContext
-    } = this.props;
-
-    fireauth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        const postSignInPath = qs.parse(this.props.location.search).postSignInPath;
-        const destination = postSignInPath ? postSignInPath : defaultPostAuthDestination;
-        resetContext();
-        history.push(destination);
-      })
-      .catch(error => {
-        this.setState({error : error});
-      });
-
-    event.preventDefault();
-  }
-
-  render() {
-    const { email, password, error } = this.state;
-    return <SignInForm
-        email={email}
-        password={password}
-        error={error}
-        onSubmit={this.onSubmit}
-        onInputChange={this.onInputChange}
-        fieldWatcher={this.fieldWatcher} />
-  }
+  return (
+    <LabeledBox className={null/*classes.centeredRoot*/} title="Sign in">
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={16}>
+          {error
+            ? <Grid item xs={12}>
+              <Typography color="error">{error.message}</Typography>
+            </Grid>
+            : null
+          }
+          <ValidInput
+              label="Email"
+              value={email}
+              validate={isEmail}
+              {...commonFieldProps}
+          />
+          <ValidInput
+              label="Password"
+              value={password}
+              type="password"
+              {...commonFieldProps}
+          />
+          <Grid item xs={12} className={null/*classes.controls*/}>
+            <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign In</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Link to={'/pw-forget'}>Forgot Password?</Link>
+          </Grid>
+          <Grid item xs={12}>
+            Need an account?
+            <Link to={'/'}>Sign Up</Link>
+          </Grid>
+        </Grid>
+      </form>
+    </LabeledBox>
+  );
 }
-
-SignInBase.propTypes = {
-  defaultPostAuthDestination : PropTypes.string.isRequired,
-  history                    : PropTypes.object.isRequired,
-  location                   : PropTypes.object.isRequired,
-  resetContext               : PropTypes.func.isRequired
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  resetContext : () => dispatch(contextActions.resetContext())
-})
-
-export const SignIn = compose(
-  withRouter,
-  connect(null, mapDispatchToProps)
-)(SignInBase)

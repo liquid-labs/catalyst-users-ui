@@ -1,7 +1,7 @@
 import * as sessionActions from './actions/sessionActions'
+export * from './components/containers/SignInContainer'
 export * from './components/ui/PasswordChange'
 export * from './components/ui/PasswordForget'
-export * from './components/ui/SignIn'
 export * from './components/ui/SignOut'
 export * from './components/ui/SignUp'
 export * from './components/ui/UserAccount'
