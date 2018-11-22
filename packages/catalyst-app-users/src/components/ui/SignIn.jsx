@@ -26,12 +26,14 @@ const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange,
   };
 
   return (
-    <Dialog fullScreen={fullScreen} open={true}>
-      <DialogTitle>Sign in</DialogTitle>
+    <Dialog fullScreen={fullScreen} open={true} maxWidth="xs">
       <DialogContent>
         <form onSubmit={onSubmit}>
           <Grid container spacing={16}>
-            {error
+            <Grid item xs={12}>
+              <img style="width: 100%; height: auto;" src="https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg" />
+            </Grid>
+            {error /* TODO: this is superceded by the core info thing */
               ? <Grid item xs={12}>
                 <Typography color="error">{error.message}</Typography>
               </Grid>
