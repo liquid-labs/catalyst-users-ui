@@ -13,8 +13,17 @@ import Typography from '@material-ui/core/Typography'
 import { ValidInput } from '@liquid-labs/react-validation'
 
 import withMobileDialog from '@material-ui/core/withMobileDialog'
+import { withStyles } from '@material-ui/core/styles'
 
 import { isEmail } from '@liquid-labs/validators'
+
+const styles = {
+  flushTop: {
+    '&:first-child': {
+      paddingTop: 0
+    }
+  }
+}
 
 const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange, error, fieldWatcher, classes}) => {
   const commonFieldProps = {
@@ -27,11 +36,11 @@ const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange,
 
   return (
     <Dialog fullScreen={fullScreen} open={true} maxWidth="xs">
-      <DialogContent>
+      <DialogContent className={classes.flushTop}>
         <form onSubmit={onSubmit}>
           <Grid container spacing={16}>
             <Grid item xs={12}>
-              <img style="width: 100%; height: auto;" src="https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg" />
+              <img style={{width: '100%', height: 'auto'}} src="https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg" />
             </Grid>
             {error /* TODO: this is superceded by the core info thing */
               ? <Grid item xs={12}>
@@ -69,5 +78,6 @@ const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange,
 }
 
 export const SignIn = compose(
+  withStyles(styles, { name: 'Login' }),
   withMobileDialog()
 )(SignInBase)
