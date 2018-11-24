@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
-import { SignUpForm } from './SignUpForm'
+import { RegisterForm } from './RegisterForm'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
 import pick from 'lodash.pick'
 
@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   error       : null
 }
 
-class SignUpBase extends Component {
+class RegisterBase extends Component {
   constructor(props) {
     super(props);
 
@@ -49,11 +49,11 @@ class SignUpBase extends Component {
 
   render() {
     const stateVars = pick(this.state, 'email', 'username', 'passwordOne', 'passwordTwo', 'error');
-    return <SignUpForm {...stateVars}
+    return <RegisterForm {...stateVars}
         fieldWatcher={this.fieldWatcher}
         onSubmit={this.onSubmit}
         onInputChange={this.onInputChange} />
   }
 }
 
-export const SignUp = withRouter(SignUpBase)
+export const Register = withRouter(RegisterBase)

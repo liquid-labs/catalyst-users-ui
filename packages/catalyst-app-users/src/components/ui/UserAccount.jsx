@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { compose } from 'recompose'
 
-import { PasswordForgetForm } from './PasswordForget'
+import { PasswordRecoverForm } from './PasswordRecover'
 import { PasswordChange } from './PasswordChange'
 
 import { checkAccess } from '../hocs/checkAccess'
@@ -12,7 +12,7 @@ import { withAuthInfo } from '../hocs/withAuthInfo'
 const UserAccountBase = ({ authUser }) =>
   <div>
     <h1>Account: {authUser.email}</h1>
-    <PasswordForgetForm />
+    <PasswordRecoverForm />
     <PasswordChange />
   </div>
 

@@ -7,7 +7,7 @@ import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
-import { SignIn } from '../ui/SignIn'
+import { Login } from '../ui/Login'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
 
@@ -17,7 +17,7 @@ const INITIAL_STATE = {
   error    : null,
 };
 
-class SignInContainerBase extends React.Component {
+class LoginContainerBase extends React.Component {
   constructor(props) {
     super(props);
 
@@ -41,11 +41,11 @@ class SignInContainerBase extends React.Component {
       resetContext
     } = this.props;
 
-    fireauth.signInWithEmailAndPassword(email, password)
+    fireauth.loginWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        const postSignInPath = qs.parse(this.props.location.search).postSignInPath;
-        const destination = postSignInPath ? postSignInPath : defaultPostAuthDestination;
+        const postLoginPath = qs.parse(this.props.location.search).postLoginPath;
+        const destination = postLoginPath ? postLoginPath : defaultPostAuthDestination;
         resetContext();
         history.push(destination);
       })
@@ -58,7 +58,7 @@ class SignInContainerBase extends React.Component {
 
   render() {
     const { email, password, error } = this.state;
-    return <SignIn
+    return <Login
         email={email}
         password={password}
         error={error}
@@ -68,7 +68,7 @@ class SignInContainerBase extends React.Component {
   }
 }
 
-SignInContainerBase.propTypes = {
+LoginContainerBase.propTypes = {
   defaultPostAuthDestination : PropTypes.string.isRequired,
   history                    : PropTypes.object.isRequired,
   location                   : PropTypes.object.isRequired,
@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetContext : () => dispatch(contextActions.resetContext())
 })
 
-export const SignInContainer = compose(
+export const LoginContainer = compose(
   withRouter,
   connect(null, mapDispatchToProps)
-)(SignInContainerBase)
+)(LoginContainerBase)

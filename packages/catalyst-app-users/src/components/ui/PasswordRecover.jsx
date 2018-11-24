@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
-const PasswordForget = () =>
+const PasswordRecover = () =>
   <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
+    <h1>PasswordRecover</h1>
+    <PasswordRecoverForm />
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -17,7 +17,7 @@ const INITIAL_STATE = {
   error : null,
 };
 
-class PasswordForgetForm extends Component {
+class PasswordRecoverForm extends Component {
   constructor(props) {
     super(props);
 
@@ -65,6 +65,6 @@ class PasswordForgetForm extends Component {
 }
 
 export {
-  PasswordForget,
-  PasswordForgetForm
+  PasswordRecover,
+  PasswordRecoverForm
 }

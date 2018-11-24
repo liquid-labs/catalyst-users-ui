@@ -10,7 +10,7 @@ import LabeledBox from './LabeledBox'
 import { ValidInput } from '@liquid-labs/react-validation'
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
-export const SignUpForm = ({
+export const RegisterForm = ({
   onSubmit, onInputChange, // handling functions
   fieldWatcher,
   username, email, passwordOne, passwordTwo, // data values
@@ -71,7 +71,7 @@ export const SignUpForm = ({
   )
 }
 
-SignUpForm.propTypes = {
+RegisterForm.propTypes = {
   onSubmit      : PropTypes.func.isRequired,
   onInputChange : PropTypes.func.isRequired,
   classes       : PropTypes.object.isRequired,

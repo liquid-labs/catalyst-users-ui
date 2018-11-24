@@ -1,4 +1,4 @@
-export const signIn = (authUser, tokenInfo) => ({
+export const login = (authUser, tokenInfo) => ({
   type      : 'SIGN_IN',
   authUser  : authUser,
   tokenInfo : tokenInfo
