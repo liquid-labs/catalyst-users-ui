@@ -22,7 +22,7 @@
   },
   "peerDependencies": {
     "@liquid-labs/catalyst-firewrap": "0.0.1",
-    "@liquid-labs/catalyst-app-core": "0.0.2",
+    "@liquid-labs/catalyst-app-core": "0.0.4",
     "@liquid-labs/mui-extensions": "0.0.4",
     "@liquid-labs/react-validation": "0.0.5",
     "@liquid-labs/validators": "0.0.3",
@@ -50,6 +50,6 @@
     "dist/"
   ],
   "dependencies": {
-    "@liquid-labs/catalyst-app-core": "0.0.4"
+    "react-sizes": "^1.0.4"
   }
 }
