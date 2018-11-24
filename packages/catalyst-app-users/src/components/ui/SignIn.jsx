@@ -20,6 +20,11 @@ import { isEmail } from '@liquid-labs/validators'
 
 import classNames from 'classnames'
 
+// This is set in the theme JSS
+const dialogPadding = 48
+const portraitSidePadding = 24 // ditto
+const landscapeSidePadding = 8 // this is combineReducers
+
 const styles = {
   flushTop: {
     '&:first-child': {
@@ -27,7 +32,7 @@ const styles = {
     }
   },
   landscapePadding: {
-    padding: '8px 0'
+    padding: `${landscapeSidePadding}px 0`
   }
 }
 
@@ -106,38 +111,42 @@ const mapScreenSizeToType = ({ width, height }) => {
   const formHeight = 260 // this is the min height of the login stuff
   const nominalSmallLogoMinHeight = 140
   const nominalSmallLogoWidth = 369
-  const windowPadding = layoutInfo.fullScreen ? 0 : 48
+  const shortModeHeight = 300
+  const intermediateHeight = 628
+  const landscapeThreshold = 560
+  const thinModeThreshold = 360
 
-  if (height <= 300) {
+  if (height <= forceFullScreenHeight) {
     layoutInfo.fullScreen = true
-    if (width >= 600) {
+    if (width >= landscapeThreshold) {
       layoutInfo.layoutDirection = 'landscape'
     }
     else {
       layoutInfo.logoSize = 'small'
     }
   }
-  else if (height <= 628) {
-    if (width > 560) {
+  else if (height <= intermediateHeight) {
+    if (width > landscapeThreshold) {
       layoutInfo.layoutDirection = 'landscape'
       layoutInfo.maxWidth = 'md'
-      if (height < formHeight + 2*48) {
+      if (height < formHeight + 2 * dialogPadding) {
         layoutInfo.fullScreen = true
       }
     }
     else {
       layoutInfo.logoSize = 'small'
-      if (height < formHeight + nominalSmallLogoMinHeight + 2 * 48) {
+      if (height < formHeight + nominalSmallLogoMinHeight + 2 * dialogPadding) {
         layoutInfo.fullScreen = true
       }
     }
   }
-  else if (width < 360) {
+  else if (thinModeThreshold < 360) {
     layoutInfo.fullScreen = true
   }
 
+  const windowPadding = layoutInfo.fullScreen ? 0 : dialogPadding
   if (layoutInfo.layoutDirection === 'landscape') {
-    const logoSpaceWidth = (width - windowPadding*2 - 8) / 2
+    const logoSpaceWidth = (width - windowPadding*2 - landscapeSidePadding) / 2
     const logoSpaceHeight = Math.max(height - windowPadding*2, formHeight)
     const logoSpaceAspectRatio = logoSpaceWidth / logoSpaceHeight
     const logoAspectRatio = 1000/889
@@ -148,7 +157,7 @@ const mapScreenSizeToType = ({ width, height }) => {
     console.log("space: ", logoSpaceWidth, logoSpaceHeight, logoSpaceAspectRatio, logoAspectRatio, layoutInfo.logoWidth)
   }
   else if (layoutInfo.logoSize === 'small') {
-    const availableWidth = width - windowPadding * 2 - 24 * 2
+    const availableWidth = width - windowPadding * 2 - portraitSidePadding * 2
     console.log('available width: ', availableWidth, width, windowPadding)
     if (availableWidth < nominalSmallLogoWidth) {
       layoutInfo.logoWidth = `${availableWidth/nominalSmallLogoWidth*100}%`
