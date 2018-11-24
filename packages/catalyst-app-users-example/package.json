@@ -2,10 +2,10 @@
   "name": "@liquid-labs/catalyst-app-users-example",
   "homepage": "https://zanerock.github.io/@liquid-labs/catalyst-app-users",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "ISC",
   "private": true,
   "dependencies": {
-    "@liquid-labs/catalyst-app-core": "0.0.2",
+    "@liquid-labs/catalyst-app-core": "0.0.4",
     "@liquid-labs/catalyst-app-users": "file:liquid-labs-catalyst-app-users-0.0.4.tgz",
     "@liquid-labs/catalyst-firewrap": "0.0.1",
     "@liquid-labs/mui-extensions": "0.0.4",
