@@ -36,7 +36,7 @@ const styles = {
   }
 }
 
-const SignInBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
+const LoginBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
   const commonFieldProps = {
     onInputChange : onInputChange,
     required      : true,
@@ -44,8 +44,6 @@ const SignInBase = ({email, password, onSubmit, fullScreen, layoutDirection, log
     fieldWatcher  : fieldWatcher,
     required      : true // eslint-disable-line no-dupe-keys
   };
-
-  console.log('layout stuff: ', fullScreen, layoutDirection, logoSize)
 
   const logoUrl = logoSize === 'large'
     ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
@@ -116,7 +114,7 @@ const mapScreenSizeToType = ({ width, height }) => {
   const landscapeThreshold = 560
   const thinModeThreshold = 360
 
-  if (height <= forceFullScreenHeight) {
+  if (height <= shortModeHeight) {
     layoutInfo.fullScreen = true
     if (width >= landscapeThreshold) {
       layoutInfo.layoutDirection = 'landscape'
@@ -154,11 +152,9 @@ const mapScreenSizeToType = ({ width, height }) => {
     if (logoSpaceAspectRatio > logoAspectRatio) {
       layoutInfo.logoWidth = `${(logoSpaceHeight * logoAspectRatio)/logoSpaceWidth*100}%`
     }
-    console.log("space: ", logoSpaceWidth, logoSpaceHeight, logoSpaceAspectRatio, logoAspectRatio, layoutInfo.logoWidth)
   }
   else if (layoutInfo.logoSize === 'small') {
     const availableWidth = width - windowPadding * 2 - portraitSidePadding * 2
-    console.log('available width: ', availableWidth, width, windowPadding)
     if (availableWidth < nominalSmallLogoWidth) {
       layoutInfo.logoWidth = `${availableWidth/nominalSmallLogoWidth*100}%`
     }
@@ -171,8 +167,8 @@ const mapScreenSizeToType = ({ width, height }) => {
   return layoutInfo
 }
 
-export const SignIn = compose(
+export const Login = compose(
   withStyles(styles, { name: 'Login' }),
   withMobileDialog(),
   withSizes(mapScreenSizeToType)
-)(SignInBase)
+)(LoginBase)
