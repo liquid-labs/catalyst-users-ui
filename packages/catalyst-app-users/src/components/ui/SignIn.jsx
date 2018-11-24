@@ -13,19 +13,25 @@ import Typography from '@material-ui/core/Typography'
 import { ValidInput } from '@liquid-labs/react-validation'
 
 import withMobileDialog from '@material-ui/core/withMobileDialog'
+import withSizes from 'react-sizes'
 import { withStyles } from '@material-ui/core/styles'
 
 import { isEmail } from '@liquid-labs/validators'
+
+import classNames from 'classnames'
 
 const styles = {
   flushTop: {
     '&:first-child': {
       paddingTop: 0
     }
+  },
+  landscapePadding: {
+    padding: '8px 0'
   }
 }
 
-const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange, error, fieldWatcher, classes}) => {
+const SignInBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
   const commonFieldProps = {
     onInputChange : onInputChange,
     required      : true,
@@ -34,50 +40,130 @@ const SignInBase = ({email, password, onSubmit, fullScreen, open, onInputChange,
     required      : true // eslint-disable-line no-dupe-keys
   };
 
+  console.log('layout stuff: ', fullScreen, layoutDirection, logoSize)
+
+  const logoUrl = logoSize === 'large'
+    ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
+    : layoutDirection === 'portrait'
+      ? "https://liquid-labs.com/static/img/landing/liquid-labs-logo-landscape.svg"
+      : "https://liquid-labs.com/static/img/landing/liquid-labs-logo-portrait.svg"
+
   return (
-    <Dialog fullScreen={fullScreen} open={true} maxWidth="xs">
-      <DialogContent className={classes.flushTop}>
+    <Dialog fullScreen={fullScreen} open={true} maxWidth={maxWidth}>
+      <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
         <form onSubmit={onSubmit}>
-          <Grid container spacing={16}>
-            <Grid item xs={12}>
-              <img style={{width: '100%', height: 'auto'}} src="https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg" />
-            </Grid>
+          <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
             {error /* TODO: this is superceded by the core info thing */
               ? <Grid item xs={12}>
                 <Typography color="error">{error.message}</Typography>
               </Grid>
               : null
             }
-            <ValidInput
-                label="Email"
-                value={email}
-                validate={isEmail}
-                {...commonFieldProps}
-            />
-            <ValidInput
-                label="Password"
-                value={password}
-                type="password"
-                {...commonFieldProps}
-            />
-            <Grid item xs={12} className={null/*classes.controls*/}>
-              <Button color="primary" type="submit" disabled={!fieldWatcher.isValid()}>Sign In</Button>
+            <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign: 'center'}}>
+              <img style={{width: logoWidth, height: 'auto'}} src={logoUrl} />
             </Grid>
-            <Grid item xs={12}>
-              <Link to={'/pw-forget'}>Forgot Password?</Link>
-            </Grid>
-            <Grid item xs={12}>
-              Need an account?
-              <Link to={'/'}>Sign Up</Link>
-            </Grid>
-          </Grid>
+            <Grid container spacing={16} item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} alignContent="flex-start">
+              <ValidInput
+                  name="email"
+                  label="Email"
+                  value={email}
+                  validate={isEmail}
+                  {...commonFieldProps}
+              />
+              <ValidInput
+                  name="password"
+                  label="Password"
+                  value={password}
+                  type="password"
+                  {...commonFieldProps}
+              />
+              <Grid item xs={12} className={null/*classes.controls*/}>
+                <Button color="primary" variant="contained" style={{width: '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Log In</Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" component={Link} to={'/pw-forget'}>Recover Password</Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" component={Link} to={'/pw-forget'}>Register</Button>
+              </Grid>
+            </Grid>{/* the form container/item  */}
+          </Grid>{/* the outer logo+form container */}
         </form>
       </DialogContent>
     </Dialog>
   )
 }
 
+const mapScreenSizeToType = ({ width, height }) => {
+  const layoutInfo = {
+    fullScreen: false,
+    layoutDirection: 'portrait',
+    logoSize: 'large',
+    maxWidth: 'xs',
+    logoWidth: '100%'
+  }
+
+  const formHeight = 260 // this is the min height of the login stuff
+  const nominalSmallLogoMinHeight = 140
+  const nominalSmallLogoWidth = 369
+  const windowPadding = layoutInfo.fullScreen ? 0 : 48
+
+  if (height <= 300) {
+    layoutInfo.fullScreen = true
+    if (width >= 600) {
+      layoutInfo.layoutDirection = 'landscape'
+    }
+    else {
+      layoutInfo.logoSize = 'small'
+    }
+  }
+  else if (height <= 628) {
+    if (width > 560) {
+      layoutInfo.layoutDirection = 'landscape'
+      layoutInfo.maxWidth = 'md'
+      if (height < formHeight + 2*48) {
+        layoutInfo.fullScreen = true
+      }
+    }
+    else {
+      layoutInfo.logoSize = 'small'
+      if (height < formHeight + nominalSmallLogoMinHeight + 2 * 48) {
+        layoutInfo.fullScreen = true
+      }
+    }
+  }
+  else if (width < 360) {
+    layoutInfo.fullScreen = true
+  }
+
+  if (layoutInfo.layoutDirection === 'landscape') {
+    const logoSpaceWidth = (width - windowPadding*2 - 8) / 2
+    const logoSpaceHeight = Math.max(height - windowPadding*2, formHeight)
+    const logoSpaceAspectRatio = logoSpaceWidth / logoSpaceHeight
+    const logoAspectRatio = 1000/889
+
+    if (logoSpaceAspectRatio > logoAspectRatio) {
+      layoutInfo.logoWidth = `${(logoSpaceHeight * logoAspectRatio)/logoSpaceWidth*100}%`
+    }
+    console.log("space: ", logoSpaceWidth, logoSpaceHeight, logoSpaceAspectRatio, logoAspectRatio, layoutInfo.logoWidth)
+  }
+  else if (layoutInfo.logoSize === 'small') {
+    const availableWidth = width - windowPadding * 2 - 24 * 2
+    console.log('available width: ', availableWidth, width, windowPadding)
+    if (availableWidth < nominalSmallLogoWidth) {
+      layoutInfo.logoWidth = `${availableWidth/nominalSmallLogoWidth*100}%`
+    }
+    else {
+      layoutInfo.logoWidth = 'auto'
+    }
+  }
+
+
+  return layoutInfo
+}
+
 export const SignIn = compose(
   withStyles(styles, { name: 'Login' }),
-  withMobileDialog()
+  withMobileDialog(),
+  withSizes(mapScreenSizeToType)
 )(SignInBase)
