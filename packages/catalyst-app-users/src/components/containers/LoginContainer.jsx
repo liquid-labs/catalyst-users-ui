@@ -7,6 +7,8 @@ import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
+import { withFieldWatcher } from '@liquid-labs/react-validation'
+
 import { Login } from '../ui/Login'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
@@ -22,8 +24,6 @@ class LoginContainerBase extends React.Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
-
-    this.fieldWatcher = getFieldWatcher();
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onInputChange = bindOnInputChange(this);
@@ -57,6 +57,7 @@ class LoginContainerBase extends React.Component {
   }
 
   render() {
+    const { fieldWatcher } = this.props;
     const { email, password, error } = this.state;
     return <Login
         email={email}
@@ -64,7 +65,7 @@ class LoginContainerBase extends React.Component {
         error={error}
         onSubmit={this.onSubmit}
         onInputChange={this.onInputChange}
-        fieldWatcher={this.fieldWatcher} />
+        fieldWatcher={fieldWatcher} />
   }
 }
 
@@ -81,5 +82,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const LoginContainer = compose(
   withRouter,
+  withFieldWatcher(),
   connect(null, mapDispatchToProps)
 )(LoginContainerBase)
