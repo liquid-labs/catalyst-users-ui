@@ -1,22 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import { compose } from 'recompose'
 
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { ValidInput } from '@liquid-labs/react-validation'
+import { LoginForm } from './LoginForm'
 
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import withSizes from 'react-sizes'
 import { withStyles } from '@material-ui/core/styles'
-
-import { isEmail } from '@liquid-labs/validators'
 
 import classNames from 'classnames'
 
@@ -36,14 +31,7 @@ const styles = {
   }
 }
 
-const AuthenticationDialogBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
-  const commonFieldProps = {
-    onInputChange : onInputChange,
-    required      : true,
-    gridded       : {xs : 12},
-    fieldWatcher  : fieldWatcher,
-    required      : true // eslint-disable-line no-dupe-keys
-  };
+const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, classes, ...formProps}) => {
 
   const logoUrl = logoSize === 'large'
     ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
@@ -54,44 +42,14 @@ const AuthenticationDialogBase = ({email, password, onSubmit, fullScreen, layout
   return (
     <Dialog fullScreen={fullScreen} open={true} maxWidth={maxWidth}>
       <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
-            {error /* TODO: this is superceded by the core info thing */
-              ? <Grid item xs={12}>
-                <Typography color="error">{error.message}</Typography>
-              </Grid>
-              : null
-            }
-            <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign: 'center'}}>
-              <img style={{width: logoWidth, height: 'auto'}} src={logoUrl} />
-            </Grid>
-            <Grid container spacing={16} item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} alignContent="flex-start">
-              <ValidInput
-                  name="email"
-                  label="Email"
-                  value={email}
-                  validate={isEmail}
-                  {...commonFieldProps}
-              />
-              <ValidInput
-                  name="password"
-                  label="Password"
-                  value={password}
-                  type="password"
-                  {...commonFieldProps}
-              />
-              <Grid item xs={12} className={null/*classes.controls*/}>
-                <Button color="primary" variant="contained" style={{width: '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Log In</Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" component={Link} to={'/pw-forget'}>Recover Password</Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" component={Link} to={'/pw-forget'}>Register</Button>
-              </Grid>
-            </Grid>{/* the form container/item  */}
-          </Grid>{/* the outer logo+form container */}
-        </form>
+        <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
+          <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign: 'center'}}>
+            <img style={{width: logoWidth, height: 'auto'}} src={logoUrl} />
+          </Grid>
+          <Grid component="form" container spacing={16} item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} alignContent="flex-start">
+            <LoginForm {...formProps} />
+          </Grid>{/* the form container/item  */}
+        </Grid>{/* the outer logo+form container */}
       </DialogContent>
     </Dialog>
   )
