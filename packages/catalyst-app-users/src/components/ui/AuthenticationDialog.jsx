@@ -36,7 +36,7 @@ const styles = {
   }
 }
 
-const LoginBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
+const AuthenticationDialogBase = ({email, password, onSubmit, fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, open, onInputChange, error, fieldWatcher, classes}) => {
   const commonFieldProps = {
     onInputChange : onInputChange,
     required      : true,
@@ -167,8 +167,8 @@ const mapScreenSizeToType = ({ width, height }) => {
   return layoutInfo
 }
 
-export const Login = compose(
-  withStyles(styles, { name: 'Login' }),
+export const AuthenticationDialog = compose(
+  withStyles(styles, { name: 'AuthenticationDialog' }),
   withMobileDialog(),
   withSizes(mapScreenSizeToType)
-)(LoginBase)
+)(AuthenticationDialogBase)

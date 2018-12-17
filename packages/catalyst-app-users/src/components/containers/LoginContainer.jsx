@@ -7,7 +7,7 @@ import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
-import { Login } from '../ui/Login'
+import { AuthenticationDialog } from '../ui/AuthenticationDialog'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { bindOnInputChange, getFieldWatcher, withFieldWatcher } from '@liquid-labs/react-validation'
 
@@ -57,7 +57,7 @@ class LoginContainerBase extends React.Component {
   render() {
     const { fieldWatcher } = this.props;
     const { email, password, error } = this.state;
-    return <Login
+    return <AuthenticationDialog
         email={email}
         password={password}
         error={error}
