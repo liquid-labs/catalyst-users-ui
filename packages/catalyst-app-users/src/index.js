@@ -1,5 +1,6 @@
 import * as sessionActions from './actions/sessionActions'
 export * from './components/containers/LoginContainer'
+export * from './components/ui/AuthenticationDialog'
 export * from './components/ui/PasswordChange'
 export * from './components/ui/PasswordRecover'
 export * from './components/ui/Logout'

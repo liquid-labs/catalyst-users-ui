@@ -2,6 +2,7 @@ import React from 'react'
 
 import { compose } from 'recompose'
 
+import { AuthenticationContainer } from '../containers/AuthenticationContainer'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -46,10 +47,8 @@ const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWid
           <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign: 'center'}}>
             <img style={{width: logoWidth, height: 'auto'}} src={logoUrl} />
           </Grid>
-          <Grid component="form" container spacing={16} item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} alignContent="flex-start">
-            <LoginForm {...formProps} />
-          </Grid>{/* the form container/item  */}
-        </Grid>{/* the outer logo+form container */}
+          <AuthenticationContainer xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
+        </Grid>
       </DialogContent>
     </Dialog>
   )
