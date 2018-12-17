@@ -7,11 +7,9 @@ import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
-import { withFieldWatcher } from '@liquid-labs/react-validation'
-
 import { Login } from '../ui/Login'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
-import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
+import { bindOnInputChange, getFieldWatcher, withFieldWatcher } from '@liquid-labs/react-validation'
 
 const INITIAL_STATE = {
   email    : '',
@@ -73,7 +71,8 @@ LoginContainerBase.propTypes = {
   defaultPostAuthDestination : PropTypes.string.isRequired,
   history                    : PropTypes.object.isRequired,
   location                   : PropTypes.object.isRequired,
-  resetContext               : PropTypes.func.isRequired
+  resetContext               : PropTypes.func.isRequired,
+  fieldWatcher               : PropTypes.object.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
