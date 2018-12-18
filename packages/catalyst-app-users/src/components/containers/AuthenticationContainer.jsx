@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { LoginForm } from '../ui/LoginForm'
 import { PasswordRecoverForm } from '../ui/PasswordRecoverForm'
+import { RegisterForm } from '../ui/RegisterForm'
 
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
@@ -35,7 +36,7 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
         : null }
       { view === LOGIN_VIEW && <LoginForm {...formProps} /> }
       { view === RECOVER_PASSWORD_VIEW && <PasswordRecoverForm {...formProps} /> }
-      { view === REGISTER_VIEW && null }
+      { view === REGISTER_VIEW && <RegisterForm {...formProps} /> }
     </Grid>
   )
 }
@@ -53,6 +54,13 @@ const mapDispatchToProps = (dispatch) => ({
   resetContext : () => dispatch(contextActions.resetContext())
 })
 
+const extractValue = (event) => {
+  const target = event.target
+  return target.type === 'checkbox'
+    ? (!!target.checked)
+    : target.value
+}
+
 const AuthenticationContainer = compose(
   withRouter,
   withFieldWatcher(),
@@ -60,21 +68,29 @@ const AuthenticationContainer = compose(
   withStateHandlers(
     INITIAL_STATE,
     {
-      showLogin : () => () => ({
-        view: LOGIN_VIEW
-      }),
-      showRegister : () => () => ({
-        view: REGISTER_VIEW
-      }),
-      showRecoverPassword : () => () => ({
-        view: RECOVER_PASSWORD_VIEW
-      }),
+      setView : () => (view) => ({ view: view }),
+      usernameChange : () => (event) => ({ username: extractValue(event) }),
+      emailChange : () => (event) => ({ email: extractValue(event) }),
+      passwordChange : () => (event) => ({ password: extractValue(event) }),
+      passwordVerifyChange : () => (event) => ({ passwordVerify: extractValue(event) }),
+      setRemoteError : () => (error) => ({ remoteError : error }),
       resetAuthentication : () => () => INITIAL_STATE,
-      setRemoteError : () => (error) => ({ remoteError : error })
-    }
+    },
   ),
   withHandlers({
-    postAuthPush : ({defaultPostAuthDestination, history}) => {
+    showLogin : ({setView}) => (event) => {
+      setView(LOGIN_VIEW)
+      event.preventDefault()
+    },
+    showRegister : ({setView}) => (event) => {
+      setView(REGISTER_VIEW)
+      event.preventDefault()
+    },
+    showRecoverPassword : ({setView}) => (event) => {
+      setView(RECOVER_PASSWORD_VIEW)
+      event.preventDefault()
+    },
+    postAuthPush : ({defaultPostAuthDestination, history}) => () => {
       const postLoginPath = qs.parse(this.props.location.search).postLoginPath
       const destination = postLoginPath
         ? postLoginPath
@@ -123,16 +139,6 @@ const AuthenticationContainer = compose(
         })
 
       event.preventDefault()
-    },
-    onInputChange : () => (propName) => (event) => {
-      const target = event.target
-      const value = target.type === 'checkbox'
-        ? (!!target.checked)
-        : target.value
-
-      return {
-        [propName] : value
-      }
     },
   })
 )(AuthenticationViewRouter)

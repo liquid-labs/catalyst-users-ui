@@ -7,13 +7,11 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail } from '@liquid-labs/validators'
 
-const LoginForm = ({email, password, onInputChange, error, fieldWatcher, showRegister, showRecoverPassword}) => {
+const LoginForm = ({email, password, emailChange, passwordChange, error, fieldWatcher, showRegister, showRecoverPassword}) => {
   const commonFieldProps = {
-    onInputChange : onInputChange,
     required      : true,
     gridded       : {xs : 12},
-    fieldWatcher  : fieldWatcher,
-    required      : true // eslint-disable-line no-dupe-keys
+    fieldWatcher  : fieldWatcher
   }
 
   return [
@@ -21,13 +19,15 @@ const LoginForm = ({email, password, onInputChange, error, fieldWatcher, showReg
         name="email"
         label="Email"
         value={email}
+        onChange={emailChange}
         validate={isEmail}
         {...commonFieldProps}
     />,
-  <ValidInput key="passwordInput"
+    <ValidInput key="passwordInput"
         name="password"
         label="Password"
         value={password}
+        onChange={passwordChange}
         type="password"
         {...commonFieldProps}
     />,
