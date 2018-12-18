@@ -17,20 +17,20 @@ const PasswordRecoverForm = ({email, onInputChange, error, fieldWatcher, showLog
   }
 
   return [
-    <ValidInput
+    <ValidInput key="emailInput"
         name="email"
         label="Email"
         value={email}
         validate={isEmail}
         {...commonFieldProps}
     />,
-    <Grid item xs={12}>
+  <Grid item xs={12} key="recoverPasswordSubmit">
       <Button color="primary" variant="contained" style={{width: '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Recover Password</Button>
     </Grid>,
-    <Grid item xs={12}>
+    <Grid item xs={12} key="showLoginControl">
       <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showLogin}>Login</Button>
     </Grid>,
-    <Grid item xs={12}>
+    <Grid item xs={12} key="showRegisterControl">
       <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showRegister}>Register</Button>
     </Grid>
   ]

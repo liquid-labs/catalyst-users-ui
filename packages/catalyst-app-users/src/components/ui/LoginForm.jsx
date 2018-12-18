@@ -17,27 +17,27 @@ const LoginForm = ({email, password, onInputChange, error, fieldWatcher, showReg
   }
 
   return [
-    <ValidInput
+    <ValidInput key="emailInput"
         name="email"
         label="Email"
         value={email}
         validate={isEmail}
         {...commonFieldProps}
     />,
-    <ValidInput
+  <ValidInput key="passwordInput"
         name="password"
         label="Password"
         value={password}
         type="password"
         {...commonFieldProps}
     />,
-    <Grid item xs={12}>
+    <Grid item xs={12} key="loginSubmit">
       <Button color="primary" variant="contained" style={{width: '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Log In</Button>
     </Grid>,
-    <Grid item xs={12}>
+    <Grid item xs={12} key="showRecoverPasswordControl">
       <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showRecoverPassword}>Recover Password</Button>
     </Grid>,
-    <Grid item xs={12}>
+    <Grid item xs={12} key="showRegisterControl">
       <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showRegister}>Register</Button>
     </Grid>
   ]

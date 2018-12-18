@@ -41,9 +41,9 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
 
 const INITIAL_STATE = {
   view: LOGIN_VIEW,
-  password : null,
-  email: null,
-  passwordVerify: null,
+  password : '',
+  email: '',
+  passwordVerify: '',
   remoteError: null,
 }
 
@@ -77,9 +77,15 @@ const AuthenticationContainer = compose(
         .then(() => {
           resetAuthentication()
           const postLoginPath = qs.parse(this.props.location.search).postLoginPath
-          const destination = postLoginPath ? postLoginPath : defaultPostAuthDestination
+          const destination = postLoginPath
+            ? postLoginPath
+            : defaultPostAuthDestination
+              ? defaultPostAuthDestination
+              : null
           resetContext()
-          history.push(destination)
+          if (destination) {
+            history.push(destination)
+          }
         })
         .catch(error => {
           setRemoteError(error)
@@ -111,8 +117,8 @@ const AuthenticationContainer = compose(
   })
 )(AuthenticationViewRouter)
 
-AuthenticationContainer.propTypes = {
-  defaultPostAuthDestination : PropTypes.string.isRequired,
+AuthenticationViewRouter.propTypes = {
+  defaultPostAuthDestination : PropTypes.string,
   history                    : PropTypes.object.isRequired,
   location                   : PropTypes.object.isRequired,
   resetContext               : PropTypes.func.isRequired,
