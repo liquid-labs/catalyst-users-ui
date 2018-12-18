@@ -1,70 +1,41 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import { fireauth } from '@liquid-labs/catalyst-firewrap'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { ValidInput } from '@liquid-labs/react-validation'
 
-const PasswordRecover = () =>
-  <div>
-    <h1>PasswordRecover</h1>
-    <PasswordRecoverForm />
-  </div>
+import { isEmail } from '@liquid-labs/validators'
 
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName] : value,
-});
-
-const INITIAL_STATE = {
-  email : '',
-  error : null,
-};
-
-class PasswordRecoverForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
+const PasswordRecoverForm = ({email, onInputChange, error, fieldWatcher, showLogin, showRegister}) => {
+  const commonFieldProps = {
+    onInputChange : onInputChange,
+    required      : true,
+    gridded       : {xs : 12},
+    fieldWatcher  : fieldWatcher,
+    required      : true // eslint-disable-line no-dupe-keys
   }
 
-  onSubmit = (event) => {
-    const { email } = this.state;
-
-    fireauth.sendPasswordResetEmail(email)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
-
-    event.preventDefault();
-  }
-
-  render() {
-    const {
-      email,
-      error,
-    } = this.state;
-
-    const isInvalid = email === '';
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-            value={this.state.email}
-            onChange={event => this.setState(byPropKey('email', event.target.value))}
-            type="text"
-            placeholder="Email Address"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
-
-        { error && <p>{error.message}</p> }
-      </form>
-    );
-  }
+  return [
+    <ValidInput
+        name="email"
+        label="Email"
+        value={email}
+        validate={isEmail}
+        {...commonFieldProps}
+    />,
+    <Grid item xs={12}>
+      <Button color="primary" variant="contained" style={{width: '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Recover Password</Button>
+    </Grid>,
+    <Grid item xs={12}>
+      <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showLogin}>Login</Button>
+    </Grid>,
+    <Grid item xs={12}>
+      <Button style={{fontSize: '0.6875rem', paddingTop: '5px', paddingBottom: '5px', formHeight: '24px'}} size="small" onClick={showRegister}>Register</Button>
+    </Grid>
+  ]
 }
 
 export {
-  PasswordRecover,
   PasswordRecoverForm
 }

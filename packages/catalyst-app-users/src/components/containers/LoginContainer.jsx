@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
-import qs from 'query-string'
 
 import { contextActions } from '@liquid-labs/catalyst-app-core'
 
@@ -14,54 +13,25 @@ import { bindOnInputChange, getFieldWatcher, withFieldWatcher } from '@liquid-la
 
 const INITIAL_STATE = {
   email    : '',
-  password : '',
-  error    : null,
+  password : ''
 };
 
 class LoginContainerBase extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE }
 
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onInputChange = bindOnInputChange(this);
-  }
-
-  onSubmit = (event) => {
-    const {
-      email,
-      password,
-    } = this.state;
-
-    const {
-      history,
-      defaultPostAuthDestination,
-      resetContext
-    } = this.props;
-
-    fireauth.loginWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        const postLoginPath = qs.parse(this.props.location.search).postLoginPath;
-        const destination = postLoginPath ? postLoginPath : defaultPostAuthDestination;
-        resetContext();
-        history.push(destination);
-      })
-      .catch(error => {
-        this.setState({error : error});
-      });
-
-    event.preventDefault();
+    this.onSubmit = this.onSubmit.bind(this)
+    this.onInputChange = bindOnInputChange(this)
   }
 
   render() {
     const { fieldWatcher, ...props } = this.props;
-    const { email, password, error } = this.state;
+    const { email, password } = this.state;
     return <LoginForm
         email={email}
         password={password}
-        error={error}
         onSubmit={this.onSubmit}
         onInputChange={this.onInputChange}
         fieldWatcher={fieldWatcher}

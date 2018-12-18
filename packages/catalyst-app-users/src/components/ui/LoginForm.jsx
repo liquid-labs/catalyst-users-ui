@@ -7,22 +7,16 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail } from '@liquid-labs/validators'
 
-const LoginForm = ({email, password, onSubmit, onInputChange, error, fieldWatcher, showRegister, showRecoverPassword}) => {
-
+const LoginForm = ({email, password, onInputChange, error, fieldWatcher, showRegister, showRecoverPassword}) => {
   const commonFieldProps = {
     onInputChange : onInputChange,
     required      : true,
     gridded       : {xs : 12},
     fieldWatcher  : fieldWatcher,
     required      : true // eslint-disable-line no-dupe-keys
-  };
+  }
 
   return [
-    error /* TODO: this is superceded by the core info thing */
-      ? <Grid item xs={12}>
-        <Typography color="error">{error.message}</Typography>
-      </Grid>
-      : null,
     <ValidInput
         name="email"
         label="Email"
