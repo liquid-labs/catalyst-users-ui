@@ -13,6 +13,7 @@ import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
 
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
+import qs from 'query-string'
 
 const LOGIN_VIEW = 'login'
 const REGISTER_VIEW = 'register'
@@ -41,8 +42,9 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
 
 const INITIAL_STATE = {
   view: LOGIN_VIEW,
-  password : '',
+  username: '',
   email: '',
+  password : '',
   passwordVerify: '',
   remoteError: null,
 }
@@ -72,20 +74,25 @@ const AuthenticationContainer = compose(
     }
   ),
   withHandlers({
-    onLogin : ({email, password, history, defaultPostAuthDestination, resetContext, setRemoteError }) => (event) => {
+    postAuthPush : ({defaultPostAuthDestination, history}) => {
+      const postLoginPath = qs.parse(this.props.location.search).postLoginPath
+      const destination = postLoginPath
+        ? postLoginPath
+        : defaultPostAuthDestination
+          ? defaultPostAuthDestination
+          : null
+      if (destination) {
+        history.push(destination)
+      }
+    }
+  }),
+  withHandlers({
+    onLogin : ({email, password, history, postAuthPush, resetContext, setRemoteError }) => (event) => {
       fireauth.loginWithEmailAndPassword(email, password)
         .then(() => {
           resetAuthentication()
-          const postLoginPath = qs.parse(this.props.location.search).postLoginPath
-          const destination = postLoginPath
-            ? postLoginPath
-            : defaultPostAuthDestination
-              ? defaultPostAuthDestination
-              : null
           resetContext()
-          if (destination) {
-            history.push(destination)
-          }
+          postAuthPush()
         })
         .catch(error => {
           setRemoteError(error)
@@ -101,6 +108,19 @@ const AuthenticationContainer = compose(
         .catch(error => {
           setRemoteError(error)
         });
+
+      event.preventDefault()
+    },
+    onRegister : ({username, email, password, resetAuthentication, resetContext, postAuthPush, history}) => (event) => {
+      fireauth.createUserWithEmailAndPassword(email, password, username)
+        .then(() =>{
+          resetAuthentication()
+          resetContext()
+          postAuthPush()
+        })
+        .catch(error => {
+          setRemoteError(error)
+        })
 
       event.preventDefault()
     },
