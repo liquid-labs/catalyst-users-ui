@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { compose } from 'recompose'
 
-import { PasswordRecoverForm } from './PasswordRecover'
+import { PasswordRecoverForm } from './PasswordRecoverForm'
 import { PasswordChange } from './PasswordChange'
 
 import { checkAccess } from '../hocs/checkAccess'

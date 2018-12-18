@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import Grid from '@material-ui/core/Grid'
 import { LoginForm } from '../ui/LoginForm'
-import { PasswordRecoverForm } from '../ui/PasswordRecover'
+import { PasswordRecoverForm } from '../ui/PasswordRecoverForm'
 
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
