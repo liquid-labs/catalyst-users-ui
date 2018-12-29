@@ -9,7 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
-import { appActions } from '@liquid-labs/catalyst-app-core'
+import { appActions } from '@liquid-labs/catalyst-core'
 
 const LogoutButton = ({dispatch, history}) => (
   <IconButton onClick={() => { dispatch.reset(); fireauth.signOut().then(history.push('/')) }}>
