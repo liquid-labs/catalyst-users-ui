@@ -131,13 +131,12 @@ const AuthenticationContainer = compose(
     },
     onRegister : ({username, email, password, resetAuthentication, resetContext, setRemoteError, postAuthPush, history}) => (event) => {
       fireauth.createUserWithEmailAndPassword(email, password, username)
-        .then(() =>{
+        .then(() => {
           resetAuthentication()
           resetContext()
           postAuthPush()
         })
         .catch(error => {
-          console.log("error", error)
           setRemoteError(error)
         })
 
