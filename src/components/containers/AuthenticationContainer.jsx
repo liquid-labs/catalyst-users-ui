@@ -9,10 +9,12 @@ import Grid from '@material-ui/core/Grid'
 import { LoginForm } from '../ui/LoginForm'
 import { PasswordRecoverForm } from '../ui/PasswordRecoverForm'
 import { RegisterForm } from '../ui/RegisterForm'
+import Typography from '@material-ui/core/Typography'
 
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
 
+import { contextActions } from '@liquid-labs/catalyst-core'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import qs from 'query-string'
 
@@ -31,7 +33,7 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
     <Grid component="form" container spacing={16} item alignContent="flex-start" xs={xs} onSubmit={onSubmit}>
       { remoteError /* TODO: this is superceded by the core info thing */
         ? <Grid item xs={12}>
-          <Typography color="error">{error.message}</Typography>
+          <Typography color="error">{remoteError.message}</Typography>
         </Grid>
         : null }
       { view === LOGIN_VIEW && <LoginForm {...formProps} /> }
@@ -90,8 +92,8 @@ const AuthenticationContainer = compose(
       setView(RECOVER_PASSWORD_VIEW)
       event.preventDefault()
     },
-    postAuthPush : ({defaultPostAuthDestination, history}) => () => {
-      const postLoginPath = qs.parse(this.props.location.search).postLoginPath
+    postAuthPush : ({defaultPostAuthDestination, history, location}) => () => {
+      const postLoginPath = qs.parse(location.search).postLoginPath
       const destination = postLoginPath
         ? postLoginPath
         : defaultPostAuthDestination
@@ -127,7 +129,7 @@ const AuthenticationContainer = compose(
 
       event.preventDefault()
     },
-    onRegister : ({username, email, password, resetAuthentication, resetContext, postAuthPush, history}) => (event) => {
+    onRegister : ({username, email, password, resetAuthentication, resetContext, setRemoteError, postAuthPush, history}) => (event) => {
       fireauth.createUserWithEmailAndPassword(email, password, username)
         .then(() =>{
           resetAuthentication()
@@ -135,6 +137,7 @@ const AuthenticationContainer = compose(
           postAuthPush()
         })
         .catch(error => {
+          console.log("error", error)
           setRemoteError(error)
         })
 
