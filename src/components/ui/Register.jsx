@@ -24,34 +24,10 @@ class RegisterBase extends Component {
     this.onInputChange = bindOnInputChange(this);
   }
 
-  onSubmit = (event) => {
-    const {
-      username,
-      email,
-      passwordOne,
-    } = this.state
-
-    const {
-      history,
-    } = this.props
-
-    fireauth.createUserWithEmailAndPassword(email, passwordOne, username)
-      .then(() =>{
-        this.setState(() => ({ ...INITIAL_STATE }))
-        history.push('/')
-      })
-      .catch(error => {
-        this.setState(() => ({ error : error }))
-      })
-
-    event.preventDefault()
-  }
-
   render() {
     const stateVars = pick(this.state, 'email', 'username', 'passwordOne', 'passwordTwo', 'error');
     return <RegisterForm {...stateVars}
         fieldWatcher={this.fieldWatcher}
-        onSubmit={this.onSubmit}
         onInputChange={this.onInputChange} />
   }
 }
