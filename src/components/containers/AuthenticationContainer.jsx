@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography'
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
 
-import { contextActions } from '@liquid-labs/catalyst-core'
+import { contextActions } from '@liquid-labs/catalyst-core-ui'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import qs from 'query-string'
 

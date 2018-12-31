@@ -2,7 +2,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { branch, compose, lifecycle, mapProps, renderNothing, withProps } from 'recompose'
 
-import { appActions } from '@liquid-labs/catalyst-core'
+import { appActions } from '@liquid-labs/catalyst-core-ui'
 
 import pick from 'lodash.pick'
 
