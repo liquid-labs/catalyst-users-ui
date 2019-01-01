@@ -1,7 +1,7 @@
 {
   "name": "@liquid-labs/catalyst-users-ui",
   "homepage": "https://zanerock.github.io/@liquid-labs/catalyst-users",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "API and UI enabling user common user features such as login and account management.",
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "ISC",
@@ -30,7 +30,7 @@
     "classnames": "^2.2.6",
     "lodash.pick": "^4.4.0",
     "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.0.0",
+    "react": "16.x",
     "react-dom": "^15.0.0 || ^16.0.0",
     "react-redux": "5.x",
     "react-router-dom": "4.x",

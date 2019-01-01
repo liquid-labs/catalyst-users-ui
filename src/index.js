@@ -10,6 +10,7 @@ export * from './components/ui/Register'
 export * from './components/ui/UserAccount'
 
 export * from './components/hocs/checkAccess'
+export * from './components/hocs/manageAuthentication'
 export * from './components/hocs/withAuthInfo'
 
 export * from './reducers/sessionReducer'
