@@ -13,12 +13,14 @@ const mapDispatchToProps = (dispatch) => ({
   setErrorMessage: (errorMsg) => dispatch(appActions.setErrorMessage(errorMsg)),
 })
 
-const manageAuthentication = (postLoginUrl, postLogoutUrl) => compose(
+const manageAuthentication = compose(
   withRouter,
   connect(null, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { signIn, signOut, setErrorMessage, history, location } = this.props;
+      const { signIn, signOut, setErrorMessage, history, location, postLoginStatusChangeUrl, postLoginUrl, postLogoutUrl } = this.props
+
+      console.log("postLoginStatusChangeUrl: " + postLoginStatusChangeUrl)
 
       fireauth.onAuthStateChanged((authUser) => {
         if (authUser) {
@@ -29,13 +31,13 @@ const manageAuthentication = (postLoginUrl, postLogoutUrl) => compose(
             setErrorMessage("Could not get token info; login invalidated.");
             signOut()
 
-            history.push(postLoginUrl || '/')
+            history.push(postLoginUrl || postLoginStatusChangeUrl || '/')
           })
         }
         else {
           signOut()
           if (location.pathname !== postLogoutUrl)
-            history.push(postLogoutUrl || postLoginUrl || '/')
+            history.push(postLogoutUrl || postLoginStatusChangeUrl || '/')
         }
       })
     }
