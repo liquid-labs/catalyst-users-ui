@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import { RegisterForm } from './RegisterForm'
 import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validation'
 import pick from 'lodash.pick'

@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 export function sessionReducer(state = INITIAL_STATE, action) {
   switch(action.type) {
-  case 'SIGN_IN' :
+  case 'LOG_IN' :
     return {
       ...state,
       authResolved : true,
@@ -15,7 +15,7 @@ export function sessionReducer(state = INITIAL_STATE, action) {
       authToken    : action.tokenInfo.token,
       claims       : action.tokenInfo.claims
     }
-  case ('SIGN_OUT'):
+  case ('LOG_OUT'):
     return {
       ...state,
       authResolved : true,

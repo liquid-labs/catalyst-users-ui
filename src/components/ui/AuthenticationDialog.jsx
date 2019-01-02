@@ -1,14 +1,11 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 
 import { AuthenticationContainer } from '../containers/AuthenticationContainer'
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
-import { LoginForm } from './LoginForm'
 
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import withSizes from 'react-sizes'
@@ -22,13 +19,13 @@ const portraitSidePadding = 24 // ditto
 const landscapeSidePadding = 8 // this is combineReducers
 
 const styles = {
-  flushTop: {
-    '&:first-child': {
-      paddingTop: 0
+  flushTop : {
+    '&:first-child' : {
+      paddingTop : 0
     }
   },
-  landscapePadding: {
-    padding: `${landscapeSidePadding}px 0`
+  landscapePadding : {
+    padding : `${landscapeSidePadding}px 0`
   }
 }
 
@@ -41,11 +38,11 @@ const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWid
       : "https://liquid-labs.com/static/img/landing/liquid-labs-logo-portrait.svg"
 
   return (
-    <Dialog fullScreen={fullScreen} open={true} maxWidth={maxWidth}>
+    <Dialog fullScreen={fullScreen} open maxWidth={maxWidth}>
       <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
         <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
-          <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign: 'center'}}>
-            <img style={{width: logoWidth, height: 'auto'}} src={logoUrl} />
+          <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
+            <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
           </Grid>
           <AuthenticationContainer xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
         </Grid>
@@ -54,13 +51,24 @@ const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWid
   )
 }
 
+AuthenticationDialogBase.propTypes = {
+  fullScreen      : PropTypes.boolean,
+  layoutDirection : PropTypes.oneOf(['landscape', 'portrait']),
+  logoSize        : PropTypes.oneOf(['small', 'large']),
+  // TODO: use CSS regex
+  maxWidth        : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  logoWidth       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  open            : PropTypes.bool.isRequired,
+  classes         : PropTypes.object
+}
+
 const mapScreenSizeToType = ({ width, height }) => {
   const layoutInfo = {
-    fullScreen: false,
-    layoutDirection: 'portrait',
-    logoSize: 'large',
-    maxWidth: 'xs',
-    logoWidth: '100%'
+    fullScreen      : false,
+    layoutDirection : 'portrait',
+    logoSize        : 'large',
+    maxWidth        : 'xs',
+    logoWidth       : '100%'
   }
 
   const formHeight = 260 // this is the min height of the login stuff
@@ -125,7 +133,7 @@ const mapScreenSizeToType = ({ width, height }) => {
 }
 
 export const AuthenticationDialog = compose(
-  withStyles(styles, { name: 'AuthenticationDialog' }),
+  withStyles(styles, { name : 'AuthenticationDialog' }),
   withMobileDialog(),
   withSizes(mapScreenSizeToType)
 )(AuthenticationDialogBase)

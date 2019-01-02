@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { compose, withHandlers, withState, withStateHandlers } from 'recompose'
+import { compose, withHandlers, withStateHandlers } from 'recompose'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
@@ -44,12 +44,12 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
 }
 
 const INITIAL_STATE = {
-  view: LOGIN_VIEW,
-  username: '',
-  email: '',
-  password : '',
-  passwordVerify: '',
-  remoteError: null,
+  view           : LOGIN_VIEW,
+  username       : '',
+  email          : '',
+  password       : '',
+  passwordVerify : '',
+  remoteError    : null,
 }
 
 const mapDispatchToProps = (dispatch) => ({
@@ -70,13 +70,13 @@ const AuthenticationContainer = compose(
   withStateHandlers(
     INITIAL_STATE,
     {
-      setView : () => (view) => ({ view: view }),
-      usernameChange : () => (event) => ({ username: extractValue(event) }),
-      emailChange : () => (event) => ({ email: extractValue(event) }),
-      passwordChange : () => (event) => ({ password: extractValue(event) }),
-      passwordVerifyChange : () => (event) => ({ passwordVerify: extractValue(event) }),
-      setRemoteError : () => (error) => ({ remoteError : error }),
-      resetAuthentication : () => () => INITIAL_STATE,
+      setView              : () => (view) => ({ view : view }),
+      usernameChange       : () => (event) => ({ username : extractValue(event) }),
+      emailChange          : () => (event) => ({ email : extractValue(event) }),
+      passwordChange       : () => (event) => ({ password : extractValue(event) }),
+      passwordVerifyChange : () => (event) => ({ passwordVerify : extractValue(event) }),
+      setRemoteError       : () => (error) => ({ remoteError : error }),
+      resetAuthentication  : () => () => INITIAL_STATE,
     },
   ),
   withHandlers({
@@ -105,7 +105,7 @@ const AuthenticationContainer = compose(
     }
   }),
   withHandlers({
-    onLogin : ({email, password, history, postAuthPush, resetContext, setRemoteError }) => (event) => {
+    onLogin : ({email, password, history, resetAuthentication, postAuthPush, resetContext, setRemoteError}) => (event) => {
       fireauth.loginWithEmailAndPassword(email, password)
         .then(() => {
           resetAuthentication()
