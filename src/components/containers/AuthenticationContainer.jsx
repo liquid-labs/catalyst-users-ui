@@ -43,6 +43,15 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
   )
 }
 
+AuthenticationViewRouter.propTypes = {
+  view              : PropTypes.oneOf([LOGIN_VIEW, REGISTER_VIEW, RECOVER_PASSWORD_VIEW]).isReqired,
+  xs                : PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
+  onLogin           : PropTypes.func.isRequired,
+  onRecoverPassword : PropTypes.func.isRequired,
+  onRegister        : PropTypes.func.isRequired,
+  remoteError       : PropTypes.object // TODO: placeholder until we switch to use global app info
+}
+
 const INITIAL_STATE = {
   view           : LOGIN_VIEW,
   username       : '',
@@ -145,7 +154,7 @@ const AuthenticationContainer = compose(
   })
 )(AuthenticationViewRouter)
 
-AuthenticationViewRouter.propTypes = {
+AuthenticationContainer.propTypes = {
   defaultPostAuthDestination : PropTypes.string,
   history                    : PropTypes.object.isRequired,
   location                   : PropTypes.object.isRequired,

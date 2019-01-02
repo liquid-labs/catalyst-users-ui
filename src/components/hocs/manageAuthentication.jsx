@@ -20,15 +20,13 @@ const manageAuthentication = compose(
     componentDidMount() {
       const { logIn, logOut, setErrorMessage, history, location, postLoginStatusChangeUrl, postLoginUrl, postLogoutUrl } = this.props
 
-      console.log("postLoginStatusChangeUrl: " + postLoginStatusChangeUrl)
-
       fireauth.onAuthStateChanged((authUser) => {
         if (authUser) {
           authUser.getIdTokenResult().then(function(tokenInfo) {
             logIn(authUser, tokenInfo)
           }).catch(function(error) {
-            console.warn(error);
-            setErrorMessage("Could not get token info; login invalidated.");
+            console.warn(error) // eslint-disable-line no-console
+            setErrorMessage("Could not get token info; login invalidated.")
             logOut()
 
             history.push(postLoginUrl || postLoginStatusChangeUrl || '/')
