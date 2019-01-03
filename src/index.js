@@ -1,8 +1,8 @@
 import * as sessionActions from './actions/sessionActions'
 
 export * from './components/containers/AuthenticationContainer'
+export * from './components/ui/AccountControl'
 export * from './components/ui/AuthenticatingAppFrame'
-export * from './components/ui/AuthenticatingAppNavigation'
 export * from './components/ui/AuthenticationDialog'
 export * from './components/ui/PasswordChange'
 export * from './components/ui/PasswordRecoverForm'
