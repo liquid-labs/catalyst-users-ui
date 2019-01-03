@@ -52,7 +52,7 @@ const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWid
 }
 
 AuthenticationDialogBase.propTypes = {
-  fullScreen      : PropTypes.boolean,
+  fullScreen      : PropTypes.bool,
   layoutDirection : PropTypes.oneOf(['landscape', 'portrait']),
   logoSize        : PropTypes.oneOf(['small', 'large']),
   // TODO: use CSS regex
