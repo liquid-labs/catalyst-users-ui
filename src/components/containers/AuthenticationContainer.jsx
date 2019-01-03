@@ -29,7 +29,7 @@ const AuthenticationViewRouter = ({view, xs,
   remoteError, fieldWatcher,
   ...formProps}) => {
   const [ onSubmit, submitLabel ] = view === LOGIN_VIEW
-    ? [ onLogin, "Login" ]
+    ? [ onLogin, "Log In" ]
     : view === RECOVER_PASSWORD_VIEW
       ? [ onRecoverPassword, "Recover Password" ]
       : [ onRegister, "Register" ]
@@ -149,7 +149,7 @@ const AuthenticationContainer = compose(
   }),
   withHandlers({
     onLogin : ({email, password, history, resetAuthentication, postAuthPush, resetContext, setRemoteError}) => (event) => {
-      fireauth.loginWithEmailAndPassword(email, password)
+      fireauth.signInWithEmailAndPassword(email, password)
         .then(() => {
           resetAuthentication()
           resetContext()
