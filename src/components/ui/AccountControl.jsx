@@ -1,24 +1,39 @@
 import React from 'react'
 
+import { compose, withState } from 'recompose'
 import PropTypes from 'prop-types'
 
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import { AuthenticationDialog } from './AuthenticationDialog'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import { Link } from 'react-router-dom'
 import { Logout } from './Logout'
 
-const AccountControl = ({authUser}) =>
+import { withAuthInfo } from '../hocs/withAuthInfo'
+
+const AccountControlBase = ({authUser, authenticationDialogOpen, setAuthenticationDialogOpen}) =>
   authUser
-    ? (<div key="accountControls">
-      <IconButton component={Link}>
+    ? <div key="profileControls">
+      <IconButton>
         <AccountBoxIcon />
       </IconButton>
       <Logout />
-    </div>)
-    : (<span key="accountControls">Login</span>)
+    </div>
+    : <div key="authenticationControl">
+      <Button onClick={() => setAuthenticationDialogOpen(true)}>Login</Button>
+      <AuthenticationDialog open={authenticationDialogOpen}
+        onClose={() => setAuthenticationDialogOpen(false) }/>
+    </div>
 
-AccountControl.propTypes = {
-  authUser : PropTypes.object
+AccountControlBase.propTypes = {
+  authUser                    : PropTypes.object,
+  authenticationDialogOpen    : PropTypes.bool.isRequired,
+  setAuthenticationDialogOpen : PropTypes.func.isRequired
 }
+
+const AccountControl = compose(
+  withAuthInfo,
+  withState('authenticationDialogOpen', 'setAuthenticationDialogOpen', false)
+)(AccountControlBase)
 
 export { AccountControl }
