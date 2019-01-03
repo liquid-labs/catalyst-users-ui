@@ -44,7 +44,7 @@ const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegis
 }
 
 AuthenticationViewRouter.propTypes = {
-  view              : PropTypes.oneOf([LOGIN_VIEW, REGISTER_VIEW, RECOVER_PASSWORD_VIEW]).isReqired,
+  view              : PropTypes.oneOf([LOGIN_VIEW, REGISTER_VIEW, RECOVER_PASSWORD_VIEW]).isRequired,
   xs                : PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
   onLogin           : PropTypes.func.isRequired,
   onRecoverPassword : PropTypes.func.isRequired,
@@ -153,13 +153,5 @@ const AuthenticationContainer = compose(
     },
   })
 )(AuthenticationViewRouter)
-
-AuthenticationContainer.propTypes = {
-  defaultPostAuthDestination : PropTypes.string,
-  history                    : PropTypes.object.isRequired,
-  location                   : PropTypes.object.isRequired,
-  resetContext               : PropTypes.func.isRequired,
-  fieldWatcher               : PropTypes.object.isRequired
-}
 
 export { AuthenticationContainer }
