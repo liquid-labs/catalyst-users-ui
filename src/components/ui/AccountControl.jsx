@@ -22,7 +22,7 @@ const AccountControlBase = ({authUser, authenticationDialogOpen, setAuthenticati
     : <div key="authenticationControl">
       <Button onClick={() => setAuthenticationDialogOpen(true)}>Login</Button>
       <AuthenticationDialog open={authenticationDialogOpen}
-        onClose={() => setAuthenticationDialogOpen(false) }/>
+          onClose={() => setAuthenticationDialogOpen(false)} />
     </div>
 
 AccountControlBase.propTypes = {

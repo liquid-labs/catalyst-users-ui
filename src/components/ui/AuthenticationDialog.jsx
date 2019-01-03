@@ -29,7 +29,7 @@ const styles = {
   }
 }
 
-const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWidth, logoWidth, classes, ...remainder}) => {
+const AuthenticationDialogBase = ({layoutDirection, logoSize, logoWidth, onClose, classes, ...remainder}) => {
 
   const logoUrl = logoSize === 'large'
     ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
@@ -38,13 +38,13 @@ const AuthenticationDialogBase = ({fullScreen, layoutDirection, logoSize, maxWid
       : "https://liquid-labs.com/static/img/landing/liquid-labs-logo-portrait.svg"
 
   return (
-    <Dialog fullScreen={fullScreen} open={open} maxWidth={maxWidth} {...remainder}>
+    <Dialog onClose={onClose} {...remainder}>
       <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
         <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
           <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
             <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
           </Grid>
-          <AuthenticationContainer xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
+          <AuthenticationContainer onClose={onClose} xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
         </Grid>
       </DialogContent>
     </Dialog>
@@ -59,6 +59,7 @@ AuthenticationDialogBase.propTypes = {
   maxWidth        : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   logoWidth       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   open            : PropTypes.bool.isRequired,
+  onClose         : PropTypes.func.isRequired,
   classes         : PropTypes.object
 }
 

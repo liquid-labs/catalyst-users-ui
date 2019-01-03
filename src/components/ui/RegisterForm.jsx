@@ -2,8 +2,6 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
 import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
@@ -46,15 +44,6 @@ export const RegisterForm = ({username, email, password, passwordVerify, usernam
         validate={fieldsMatch('Passwords', password)}
         {...commonFieldProps}
       />,
-    <Grid item xs={12} key="registerSubmit">
-      <Button color="primary" variant="contained" style={{width : '100%'}} type="submit" disabled={!fieldWatcher.isValid()}>Register</Button>
-    </Grid>,
-    <Grid item xs={12} key="showLoginControl">
-      <Button style={{fontSize : '0.6875rem', paddingTop : '5px', paddingBottom : '5px', formHeight : '24px'}} size="small" onClick={showLogin}>Login</Button>
-    </Grid>,
-    <Grid item xs={12} key="showRecoverPasswordControl">
-      <Button style={{fontSize : '0.6875rem', paddingTop : '5px', paddingBottom : '5px', formHeight : '24px'}} size="small" onClick={showRecoverPassword}>Recover Password</Button>
-    </Grid>,
   ]
 }
 
