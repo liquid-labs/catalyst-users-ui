@@ -11,20 +11,20 @@ import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
 import { appActions } from '@liquid-labs/catalyst-core-ui'
 
-const LogoutButton = ({dispatch, history}) => (
-  <IconButton onClick={() => { dispatch.reset(); fireauth.signOut().then(history.push('/')) }}>
+const LogoutButton = ({reset, history}) => (
+  <IconButton onClick={() => { reset(); fireauth.signOut().then(history.push('/')) }}>
     <ExitToAppIcon />
   </IconButton>
 )
 
 LogoutButton.propTypes = {
-  dispatch : PropTypes.func.isRequired,
+  reset : PropTypes.func.isRequired,
   history  : PropTypes.object.isRequired
 }
 
-const mapDispatchToProps = (dispatch) => ({ dispatch : {
+const mapDispatchToProps = (dispatch) => ({
   reset : () => dispatch(appActions.reset())
-}})
+})
 
 export const Logout = compose(
   withRouter,
