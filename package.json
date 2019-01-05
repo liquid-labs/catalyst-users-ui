@@ -21,7 +21,7 @@
   },
   "peerDependencies": {
     "@liquid-labs/catalyst-firewrap": "^1.0.2",
-    "@liquid-labs/catalyst-core-ui": "0.0.8",
+    "@liquid-labs/catalyst-core-ui": "0.0.10",
     "@liquid-labs/react-validation": "0.0.5",
     "@liquid-labs/validators": "0.0.3",
     "@material-ui/core": "^1.5.1 || 3.x",
