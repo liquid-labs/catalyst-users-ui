@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
+import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { LoginForm } from '../ui/LoginForm'
 import { PasswordRecoverForm } from '../ui/PasswordRecoverForm'
@@ -22,34 +23,67 @@ const LOGIN_VIEW = 'login'
 const REGISTER_VIEW = 'register'
 const RECOVER_PASSWORD_VIEW = 'recover'
 
-const AuthenticationViewRouter = ({view, xs, onLogin, onRecoverPassword, onRegister, remoteError, ...formProps}) => {
-  const onSubmit = view === LOGIN_VIEW
-    ? onLogin
+const AuthenticationViewRouter = ({view, xs,
+  onLogin, onRecoverPassword, onRegister, onClose,
+  showLogin, showRecoverPassword, showRegister,
+  remoteError, fieldWatcher,
+  ...formProps}) => {
+  const [ onSubmit, submitLabel ] = view === LOGIN_VIEW
+    ? [ onLogin, "Log In" ]
     : view === RECOVER_PASSWORD_VIEW
-      ? onRecoverPassword
-      : onRegister
+      ? [ onRecoverPassword, "Recover Password" ]
+      : [ onRegister, "Register" ]
 
   return (
-    <Grid component="form" container spacing={16} item alignContent="flex-start" xs={xs} onSubmit={onSubmit}>
+    <Grid container spacing={16} item alignContent="flex-start" xs={xs}>
       { remoteError /* TODO: this is superceded by the core info thing */
         ? <Grid item xs={12}>
           <Typography color="error">{remoteError.message}</Typography>
         </Grid>
         : null }
-      { view === LOGIN_VIEW && <LoginForm {...formProps} /> }
-      { view === RECOVER_PASSWORD_VIEW && <PasswordRecoverForm {...formProps} /> }
-      { view === REGISTER_VIEW && <RegisterForm {...formProps} /> }
+      { view === LOGIN_VIEW && <LoginForm fieldWatcher={fieldWatcher} {...formProps} /> }
+      { view === RECOVER_PASSWORD_VIEW && <PasswordRecoverForm fieldWatcher={fieldWatcher} {...formProps} /> }
+      { view === REGISTER_VIEW && <RegisterForm fieldWatcher={fieldWatcher} {...formProps} /> }
+      <Grid item xs={12} key="authenticationSubmit">
+        <Button color="primary" variant="contained" style={{width : '100%'}}
+            disabled={!fieldWatcher.isValid()} onClick={onSubmit}>
+          {submitLabel}
+        </Button>
+      </Grid>
+      <Grid item xs={12} key="authenticationCancel">
+        <Button color="secondary" variant="outlined" style={{width : '100%'}}
+            onClick={() => onClose()}>
+          Cancel
+        </Button>
+      </Grid>
+      { view !== LOGIN_VIEW
+        && <Grid item xs={12} key="showLoginControl">
+          <Button style={{fontSize : '0.6875rem', paddingTop : '5px', paddingBottom : '5px', formHeight : '24px'}} size="small" onClick={showLogin}>Login</Button>
+        </Grid>}
+      { view !== RECOVER_PASSWORD_VIEW
+        && <Grid item xs={12} key="showRecoverPasswordControl">
+          <Button style={{fontSize : '0.6875rem', paddingTop : '5px', paddingBottom : '5px', formHeight : '24px'}} size="small" onClick={showRecoverPassword}>Recover Password</Button>
+        </Grid> }
+      { view !== REGISTER_VIEW
+        && <Grid item xs={12} key="showRegisterControl">
+          <Button style={{fontSize : '0.6875rem', paddingTop : '5px', paddingBottom : '5px', formHeight : '24px'}} size="small" onClick={showRegister}>Register</Button>
+        </Grid> }
     </Grid>
   )
 }
 
 AuthenticationViewRouter.propTypes = {
-  view              : PropTypes.oneOf([LOGIN_VIEW, REGISTER_VIEW, RECOVER_PASSWORD_VIEW]).isReqired,
-  xs                : PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
-  onLogin           : PropTypes.func.isRequired,
-  onRecoverPassword : PropTypes.func.isRequired,
-  onRegister        : PropTypes.func.isRequired,
-  remoteError       : PropTypes.object // TODO: placeholder until we switch to use global app info
+  view                : PropTypes.oneOf([LOGIN_VIEW, REGISTER_VIEW, RECOVER_PASSWORD_VIEW]).isRequired,
+  xs                  : PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
+  onLogin             : PropTypes.func.isRequired,
+  onRecoverPassword   : PropTypes.func.isRequired,
+  onRegister          : PropTypes.func.isRequired,
+  onClose             : PropTypes.func.isRequired,
+  showLogin           : PropTypes.func.isRequired,
+  showRecoverPassword : PropTypes.func.isRequired,
+  showRegister        : PropTypes.func.isRequired,
+  fieldWatcher        : PropTypes.object.isRequired,
+  remoteError         : PropTypes.object // TODO: placeholder until we switch to use global app info
 }
 
 const INITIAL_STATE = {
@@ -115,7 +149,7 @@ const AuthenticationContainer = compose(
   }),
   withHandlers({
     onLogin : ({email, password, history, resetAuthentication, postAuthPush, resetContext, setRemoteError}) => (event) => {
-      fireauth.loginWithEmailAndPassword(email, password)
+      fireauth.signInWithEmailAndPassword(email, password)
         .then(() => {
           resetAuthentication()
           resetContext()
@@ -153,13 +187,5 @@ const AuthenticationContainer = compose(
     },
   })
 )(AuthenticationViewRouter)
-
-AuthenticationContainer.propTypes = {
-  defaultPostAuthDestination : PropTypes.string,
-  history                    : PropTypes.object.isRequired,
-  location                   : PropTypes.object.isRequired,
-  resetContext               : PropTypes.func.isRequired,
-  fieldWatcher               : PropTypes.object.isRequired
-}
 
 export { AuthenticationContainer }
