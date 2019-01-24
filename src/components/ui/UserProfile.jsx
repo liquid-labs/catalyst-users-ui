@@ -3,31 +3,33 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { compose } from 'recompose'
 
+import { AccountControl } from '@liquid-labs/catalyst-users-ui'
+import { BasicContentFrame } from '@liquid-labs/catalyst-core-ui'
 import { PasswordRecoverForm } from './PasswordRecoverForm'
 import { PasswordChange } from './PasswordChange'
 
 import { checkAccess } from '../hocs/checkAccess'
 import { withAuthInfo } from '../hocs/withAuthInfo'
 
-const UserAccountBase = ({ authUser }) =>
-  <div>
+const UserProfileBase = ({ authUser }) =>
+  <BasicContentFrame AppNavigationProps={{ logoTo : '/', rightChildren : <AccountControl /> }}>
     <h1>Account: {authUser.email}</h1>
     <PasswordRecoverForm />
     <PasswordChange />
-  </div>
+  </BasicContentFrame>
 
 const mapStateToProps = (state) => ({
   authUser : state.sessionState.authUser,
 });
 
-UserAccountBase.propTypes = {
+UserProfileBase.propTypes = {
   authUser : PropTypes.object.isRequired
 }
 
 const authCondition = ({authUser}) => Boolean(authUser)
 
-export const UserAccount = compose(
+export const UserProfile = compose(
   withAuthInfo,
   checkAccess(authCondition),
   connect(mapStateToProps)
-)(UserAccountBase)
+)(UserProfileBase)
