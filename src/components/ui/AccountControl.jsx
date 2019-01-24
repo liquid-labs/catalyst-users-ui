@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import { AuthenticationDialog } from './AuthenticationDialog'
 import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -39,8 +40,9 @@ const AccountControlBase = ({
             open={Boolean(menuAnchor)}
             onClose={closeMenu}
         >
-          <MenuItem onClick={menuLogout}>Logout</MenuItem>
           <MenuItem onClick={menuProfile}>Profile</MenuItem>
+          <Divider />
+          <MenuItem onClick={menuLogout}>Logout</MenuItem>
         </Menu>
       </div>
     )
