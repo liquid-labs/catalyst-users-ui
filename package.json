@@ -1,7 +1,7 @@
 {
   "name": "@liquid-labs/catalyst-users-ui",
   "homepage": "https://zanerock.github.io/@liquid-labs/catalyst-users",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "API and UI enabling user common user features such as login and account management.",
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "ISC",
@@ -20,9 +20,11 @@
     "prepare": "npm run build"
   },
   "peerDependencies": {
+    "@liquid-labs/catalyst-core-ui": "0.0.13",
     "@liquid-labs/catalyst-firewrap": "^1.0.2",
-    "@liquid-labs/catalyst-core-ui": "0.0.10",
-    "@liquid-labs/react-validation": "0.0.5",
+    "@liquid-labs/catalyst-theme": "0.0.1",
+    "@liquid-labs/mui-extensions": "0.0.9",
+    "@liquid-labs/react-validation": "0.0.6",
     "@liquid-labs/validators": "0.0.3",
     "@material-ui/core": "^1.5.1 || 3.x",
     "@material-ui/icons": "^1.5.1 || 3.x",
@@ -31,7 +33,7 @@
     "prop-types": "^15.5.4",
     "react": "16.x",
     "react-dom": "^15.0.0 || ^16.0.0",
-    "react-redux": "5.x",
+    "react-redux": "5.x || 6.x",
     "react-router-dom": "4.x",
     "recompose": "^0.30.0"
   },
