@@ -11,11 +11,13 @@ import { PasswordChange } from './PasswordChange'
 import { checkAccess } from '../hocs/checkAccess'
 import { withAuthInfo } from '../hocs/withAuthInfo'
 
-const UserProfileBase = ({ authUser }) =>
+const UserProfileBase = ({ authUser, match }) =>
   <BasicContentFrame AppNavigationProps={{ logoTo : '/', rightChildren : <AccountControl /> }}>
-    <h1>Account: {authUser.email}</h1>
-    <PasswordRecoverForm />
-    <PasswordChange />
+    <h1>Account Profile: {authUser.email}</h1>
+    { (match.params.id == 'self' || match.params.id == authUser.uid) &&
+      <PasswordChange /> }
+    { (match.params.id != 'self' && match.params.id != authUser.uid) &&
+      <PasswordReset /> }
   </BasicContentFrame>
 
 const mapStateToProps = (state) => ({
