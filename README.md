@@ -8,7 +8,7 @@
 ## Install
 
 ```bash
-npm install --save @liquid-labs/catalyst-users
+npm install --save @liquid-labs/catalyst-users-ui
 ```
 
 ## License
