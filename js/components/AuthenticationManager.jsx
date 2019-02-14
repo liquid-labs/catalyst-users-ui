@@ -44,7 +44,7 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
       if (authUser) {
         authUser.getIdTokenResult().then(function(tokenInfo) {
           setAuthenticationStatus({
-            initialAuthenticationState...,
+            ...initialAuthenticationState,
             authUser  : authUser,
             authToken : action.tokenInfo.token,
             claims    : action.tokenInfo.claims,

@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
+
+import { AuthenticationContext } from '../AuthenticationManager'
 
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
-import { withLogout } from '../hocs/withLogout'
-
-const LogoutButtonBase = ({logout}) => (
-  <IconButton onClick={() => logout()}>
-    <ExitToAppIcon />
-  </IconButton>
-)
-
-LogoutButtonBase.propTypes = {
-  logout : PropTypes.func.isRequired,
+const LogoutButton = (iconProps, props) => {
+  const { authUser, logOut } = useContext(AuthenticationContext)
+  return (
+    <IconButton onClick={() => logOut()} disabled={Boolean(authUser)} {...props}>
+      <ExitToAppIcon {...iconProps} />
+    </IconButton>
+  )
 }
 
-export const LogoutButton = withLogout(LogoutButtonBase)
+if (process.env.NODE_ENV !== 'production') {
+  LogoutButtonBase.propTypes = {
+    iconProps : PropTypes.object
+  }
+}
+
+export {
+  LogoutButton
+}

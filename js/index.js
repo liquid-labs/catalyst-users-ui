@@ -10,4 +10,3 @@ export * from './components/ui/Register'
 export * from './components/ui/UserProfile'
 
 export * from './components/hocs/checkAccess'
-export * from './components/hocs/withLogout'
