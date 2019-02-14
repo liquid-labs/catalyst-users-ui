@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { appActions } from '@liquid-labs/catalyst-core-ui'
 import * as sessionActions from '../../actions/sessionActions'
 
-import { withAwait } from '@liquid-labs/catalyst-core-ui'
+import { Await } from '@liquid-labs/catalyst-core-ui'
 
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
