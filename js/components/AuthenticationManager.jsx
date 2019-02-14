@@ -17,7 +17,8 @@ const initialAuthenticationState = {
   authToken : null,
   claims    : [],
   resolved  : false,
-  error     : null
+  error     : null,
+  logOut    : () => fireauth.signOut()
 }
 
 const AuthenticationContext = React.createContext(initialAuthenticationState)
@@ -43,11 +44,11 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
       if (authUser) {
         authUser.getIdTokenResult().then(function(tokenInfo) {
           setAuthenticationStatus({
+            initialAuthenticationState...,
             authUser  : authUser,
             authToken : action.tokenInfo.token,
             claims    : action.tokenInfo.claims,
             resolved  : true,
-            error     : null
           })
         })
         .catch(function(error) {
@@ -74,11 +75,12 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
   return (
     <AuthenticationContext.Provider value={authenticationStatus}>
       <Await name="Authentication manager"
-          checks={checks} checkProps={authenticationStatus}>
-        { children(props) }
+          checks={checks} checkProps={authenticationStatus}
+          {...props}>
+        { children() }
       </Await>
     </AuthenticationContext.Provider>
   )
 }
 
-export { AuthenticationManager }
+export { AuthenticationManager, AuthenticationContext }
