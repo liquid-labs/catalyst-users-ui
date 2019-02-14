@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { appActions } from '@liquid-labs/catalyst-core-ui'
-import * as sessionActions from '../../actions/sessionActions'
 
 // import { Await } from '@liquid-labs/catalyst-core-ui'
 // import { awaitStatus } from '@liquid-labs/react-await'
@@ -32,17 +31,18 @@ const statusCheck = ({resolved, error}) =>
   error !== null
     ? { status: awaitStatus.BLOCKED,
         summary: "is blocked on error form auth provider (firebase). Ensure you have a good network connection." }
-  resolved
-    ? { status: awaitStatus.RESOLVED,
-        summary: "has received response from auth provider (firebase)." }
-    : { status: awaitStatus.WAITING,
-        summary: "is waiting on response from auth provider (firebase)..." }
+    : resolved
+      ? { status: awaitStatus.RESOLVED,
+          summary: "has received response from auth provider (firebase)." }
+      : { status: awaitStatus.WAITING,
+          summary: "is waiting on response from auth provider (firebase)..." }
 const checks = [statusCheck]
 
 const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
   const [ authenticationStatus, setAuthenticationStatus ] =
     useState(initialAuthenticationState)
 
+  // We set up the listener on mount.
   useEffect(() => {
     fireauth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -68,10 +68,10 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
         })
       }
       else {
-        setAuthenticationStatus{
+        setAuthenticationStatus({
           ...initialAuthenticationState,
           resolved: true
-        }
+        })
       }
     })
   }, [])
