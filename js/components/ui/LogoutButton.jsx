@@ -16,7 +16,7 @@ const LogoutButton = (iconProps, props) => {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  LogoutButtonBase.propTypes = {
+  LogoutButton.propTypes = {
     iconProps : PropTypes.object
   }
 }
