@@ -5,6 +5,8 @@
  * resolved.
  */
  import React, { useEffect, useState } from 'react'
+ import { connect } from 'react-redux'
+ import PropTypes from 'prop-types'
 
 // import { Await } from '@liquid-labs/catalyst-core-ui'
 // import { awaitStatus } from '@liquid-labs/react-await'
@@ -32,9 +34,17 @@ const statusCheck = ({resolved, error}) =>
           summary: "has received response from auth provider (firebase)." }
       : { status: awaitStatus.WAITING,
           summary: "is waiting on response from auth provider (firebase)..." }
+
 const checks = [statusCheck]
 
-const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
+const mapDispatchToProps = (dispatch) => ({
+  errorHandler : (msg) => dispatch(appActions.setErrorMessage(msg))
+})
+
+// TODO: once we refactor the error display stuff to use hooks, we can get rid
+// of the 'connect' (obviously) and make errorHandler overrideable with the
+// AppInfo display as the default.
+const AuthenticationManager = connect(null, setErrorMessage)(({errorHandler, blocked, children, ...props}) => {
   const [ authenticationStatus, setAuthenticationStatus ] =
     useState(initialAuthenticationState)
 
@@ -46,8 +56,8 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
           setAuthenticationStatus({
             ...initialAuthenticationState,
             authUser  : authUser,
-            authToken : action.tokenInfo.token,
-            claims    : action.tokenInfo.claims,
+            authToken : tokenInfo.token,
+            claims    : tokenInfo.claims,
             resolved  : true,
           })
         })
@@ -55,7 +65,7 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
           if (process.env.NODE_ENV !== 'production') {
             console.warn('Error getting authentication token', error) // eslint-disable-line no-console
           }
-          if (errorHandler) errorHandler("Could not get token info; login invalidated.")
+          errorHandler("Could not get token info; login invalidated.")
           setAuthenticationStatus({
             ...initialAuthenticationState,
             resolved: true,
@@ -75,12 +85,17 @@ const AuthenticationManager = (errorHandler, blocked, children, ...props) => {
   return (
     <AuthenticationContext.Provider value={authenticationStatus}>
       <Await name="Authentication manager"
-          checks={checks} checkProps={authenticationStatus}
-          {...props}>
-        { children() }
+          checks={checks} checkProps={authenticationStatus} {...props}>
+        { typeof children === 'function' ? children(props) : children }
       </Await>
     </AuthenticationContext.Provider>
   )
+})
+
+if (process.env.NODE_ENV !== 'production') {
+  AuthenticationManager.propTypes = {
+    children : PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired
+  }
 }
 
 export { AuthenticationManager, AuthenticationContext }
