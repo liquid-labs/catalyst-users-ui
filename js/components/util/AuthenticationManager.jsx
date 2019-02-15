@@ -10,9 +10,8 @@ import PropTypes from 'prop-types'
 
 import { appActions } from '@liquid-labs/catalyst-core-ui'
 
-// import { Await } from '@liquid-labs/catalyst-core-ui'
-// import { awaitStatus } from '@liquid-labs/react-await'
-import { Await, awaitStatus } from '@liquid-labs/react-await'
+import { Await } from '@liquid-labs/catalyst-core-ui'
+import { awaitStatus } from '@liquid-labs/react-await'
 
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 
