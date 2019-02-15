@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
-import { compose, withState } from 'recompose'
 import PropTypes from 'prop-types'
 
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { AuthenticationContext } from '../AuthenticationManager'
+import { AuthenticationContext } from '../util/AuthenticationManager'
 import { AuthenticationDialog } from './AuthenticationDialog'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
@@ -14,11 +13,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 import { withRouter } from 'react-router-dom'
 
-const AccountControlBase = ({
-    menuAnchor, setMenuAnchor,
-    authenticationDialogOpen, setAuthenticationDialogOpen,
-    history }) => {
+const AccountControlWidget = withRouter(({ history }) => {
   const { authUser, logOut } = useContext(AuthenticationContext)
+  const [ menuAnchor, setMenuAnchor ] = useState(null)
+  const [ authenticationDialogOpen, setAuthenticationDialogOpen ] = useState(false)
 
   if (authUser) {
     const closeMenu = () => setMenuAnchor(null)
@@ -56,17 +54,6 @@ const AccountControlBase = ({
       </div>
     )
   }
-}
+})
 
-AccountControlBase.propTypes = {
-  authenticationDialogOpen    : PropTypes.bool.isRequired,
-  setAuthenticationDialogOpen : PropTypes.func.isRequired,
-}
-
-const AccountControl = compose(
-  withRouter,
-  withState('menuAnchor', 'setMenuAnchor', null),
-  withState('authenticationDialogOpen', 'setAuthenticationDialogOpen', false)
-)(AccountControlBase)
-
-export { AccountControl }
+export { AccountControlWidget }

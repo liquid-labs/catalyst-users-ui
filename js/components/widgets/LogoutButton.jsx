@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { AuthenticationContext } from '../AuthenticationManager'
+import { AuthenticationContext } from '../util/AuthenticationManager'
 
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'

@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { AuthenticationContext } from './AuthenticationManager'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -11,11 +12,11 @@ const mapDispatchToProps = (dispatch) => ({
 // of the 'connect' (obviously) and make errorHandler overrideable with the
 // AppInfo display as the default.
 // TODO: ditto for 'history' from 'withRouter'
-const AccessChecker = withRouter(connect(null, mapDispatchToProps)(({accessCheck, errorHandler, ...props}) =>
-  const authContext, useContext(AuthenticationContext)
-  const result = accessCheck(authContext, props)
+const AccessChecker = withRouter(connect(null, mapDispatchToProps)(({history, check, errorHandler, children, ...props}) => {
+  const authContext = useContext(AuthenticationContext)
+  const result = check(authContext, props)
 
-  if (result === true || (result && result.accessGranted === true) {
+  if (result === true || (result && result.accessGranted === true)) {
     return typeof children === 'function' ? children(props) : children
   }
   else {
@@ -29,6 +30,6 @@ const AccessChecker = withRouter(connect(null, mapDispatchToProps)(({accessCheck
 
     return null
   }
-))
+}))
 
 export { AccessChecker }

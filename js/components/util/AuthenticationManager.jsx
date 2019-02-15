@@ -4,9 +4,11 @@
  * render prop if authentication status is respectivel pending, blocked, or
  * resolved.
  */
- import React, { useEffect, useState } from 'react'
- import { connect } from 'react-redux'
- import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
+import { appActions } from '@liquid-labs/catalyst-core-ui'
 
 // import { Await } from '@liquid-labs/catalyst-core-ui'
 // import { awaitStatus } from '@liquid-labs/react-await'
@@ -27,13 +29,13 @@ const AuthenticationContext = React.createContext(initialAuthenticationState)
 
 const statusCheck = ({resolved, error}) =>
   error !== null
-    ? { status: awaitStatus.BLOCKED,
-        summary: "is blocked on error form auth provider (firebase). Ensure you have a good network connection." }
+    ? { status  : awaitStatus.BLOCKED,
+      summary : "is blocked on error form auth provider (firebase). Ensure you have a good network connection." }
     : resolved
-      ? { status: awaitStatus.RESOLVED,
-          summary: "has received response from auth provider (firebase)." }
-      : { status: awaitStatus.WAITING,
-          summary: "is waiting on response from auth provider (firebase)..." }
+      ? { status  : awaitStatus.RESOLVED,
+        summary : "has received response from auth provider (firebase)." }
+      : { status  : awaitStatus.WAITING,
+        summary : "is waiting on response from auth provider (firebase)..." }
 
 const checks = [statusCheck]
 
@@ -44,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
 // TODO: once we refactor the error display stuff to use hooks, we can get rid
 // of the 'connect' (obviously) and make errorHandler overrideable with the
 // AppInfo display as the default.
-const AuthenticationManager = connect(null, setErrorMessage)(({errorHandler, blocked, children, ...props}) => {
+const AuthenticationManager = connect(null, mapDispatchToProps)(({errorHandler, blocked, children, ...props}) => {
   const [ authenticationStatus, setAuthenticationStatus ] =
     useState(initialAuthenticationState)
 
@@ -61,22 +63,22 @@ const AuthenticationManager = connect(null, setErrorMessage)(({errorHandler, blo
             resolved  : true,
           })
         })
-        .catch(function(error) {
-          if (process.env.NODE_ENV !== 'production') {
-            console.warn('Error getting authentication token', error) // eslint-disable-line no-console
-          }
-          errorHandler("Could not get token info; login invalidated.")
-          setAuthenticationStatus({
-            ...initialAuthenticationState,
-            resolved: true,
-            error: error
+          .catch(function(error) {
+            if (process.env.NODE_ENV !== 'production') {
+              console.warn('Error getting authentication token', error) // eslint-disable-line no-console
+            }
+            errorHandler("Could not get token info; login invalidated.")
+            setAuthenticationStatus({
+              ...initialAuthenticationState,
+              resolved : true,
+              error    : error
+            })
           })
-        })
       }
       else {
         setAuthenticationStatus({
           ...initialAuthenticationState,
-          resolved: true
+          resolved : true
         })
       }
     })

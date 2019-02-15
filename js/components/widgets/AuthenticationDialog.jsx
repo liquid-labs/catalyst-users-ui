@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { compose } from 'recompose'
 
-import { AuthenticationContainer } from '../containers/AuthenticationContainer'
+import { AuthenticationWidget } from './AuthenticationWidget'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import Grid from '@material-ui/core/Grid'
@@ -29,38 +28,44 @@ const styles = {
   }
 }
 
-const AuthenticationDialogBase = ({layoutDirection, logoSize, logoWidth, onClose, classes, ...remainder}) => {
+const AuthenticationDialog =
+  withStyles(styles, { name : 'AuthenticationDialog' })(
+    withMobileDialog()(
+      withSizes(mapScreenSizeToType)(
+        ({layoutDirection, logoSize, logoWidth, onClose, classes, ...remainder}) => {
 
-  const logoUrl = logoSize === 'large'
-    ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
-    : layoutDirection === 'portrait'
-      ? "https://liquid-labs.com/static/img/landing/liquid-labs-logo-landscape.svg"
-      : "https://liquid-labs.com/static/img/landing/liquid-labs-logo-portrait.svg"
+          const logoUrl = logoSize === 'large'
+            ? "https://liquid-labs.com/static/img/app/liquid-labs-login-tall.svg"
+            : layoutDirection === 'portrait'
+              ? "https://liquid-labs.com/static/img/landing/liquid-labs-logo-landscape.svg"
+              : "https://liquid-labs.com/static/img/landing/liquid-labs-logo-portrait.svg"
 
-  return (
-    <Dialog onClose={onClose} {...remainder}>
-      <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
-        <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
-          <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
-            <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
-          </Grid>
-          <AuthenticationContainer onClose={onClose} xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
-        </Grid>
-      </DialogContent>
-    </Dialog>
-  )
-}
+          return (
+            <Dialog onClose={onClose} {...remainder}>
+              <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
+                <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
+                  <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
+                    <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
+                  </Grid>
+                  <AuthenticationWidget onClose={onClose} xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
+                </Grid>
+              </DialogContent>
+            </Dialog>
+          )
+        })))
 
-AuthenticationDialogBase.propTypes = {
-  fullScreen      : PropTypes.bool,
-  layoutDirection : PropTypes.oneOf(['landscape', 'portrait']),
-  logoSize        : PropTypes.oneOf(['small', 'large']),
-  // TODO: use CSS regex
-  maxWidth        : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  logoWidth       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  open            : PropTypes.bool.isRequired,
-  onClose         : PropTypes.func.isRequired,
-  classes         : PropTypes.object
+if (process.env.NODE_ENV !== 'production') {
+  AuthenticationDialog.propTypes = {
+    fullScreen      : PropTypes.bool,
+    layoutDirection : PropTypes.oneOf(['landscape', 'portrait']),
+    logoSize        : PropTypes.oneOf(['small', 'large']),
+    // TODO: use CSS regex
+    maxWidth        : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    logoWidth       : PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    open            : PropTypes.bool.isRequired,
+    onClose         : PropTypes.func.isRequired,
+    classes         : PropTypes.object
+  }
 }
 
 const mapScreenSizeToType = ({ width, height }) => {
@@ -133,8 +138,4 @@ const mapScreenSizeToType = ({ width, height }) => {
   return layoutInfo
 }
 
-export const AuthenticationDialog = compose(
-  withStyles(styles, { name : 'AuthenticationDialog' }),
-  withMobileDialog(),
-  withSizes(mapScreenSizeToType)
-)(AuthenticationDialogBase)
+export { AuthenticationDialog }
