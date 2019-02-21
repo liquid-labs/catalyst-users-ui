@@ -7,9 +7,9 @@ import { connect } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import { LoginForm } from '../ui/LoginForm'
-import { PasswordRecoverForm } from '../ui/PasswordRecoverForm'
-import { RegisterForm } from '../ui/RegisterForm'
+import { LoginForm } from './login/LoginForm'
+import { PasswordRecoverForm } from './login/PasswordRecoverForm'
+import { RegisterForm } from './login/RegisterForm'
 import Typography from '@material-ui/core/Typography'
 
 import { withFieldWatcher } from '@liquid-labs/react-validation'
@@ -106,7 +106,7 @@ const extractValue = (event) => {
     : target.value
 }
 
-const AuthenticationContainer = compose(
+const AuthenticationWidget = compose(
   withRouter,
   withFieldWatcher(),
   connect(null, mapDispatchToProps),
@@ -188,4 +188,4 @@ const AuthenticationContainer = compose(
   })
 )(AuthenticationViewRouter)
 
-export { AuthenticationContainer }
+export { AuthenticationWidget }
