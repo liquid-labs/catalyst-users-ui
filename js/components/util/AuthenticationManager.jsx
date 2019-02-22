@@ -4,11 +4,10 @@
  * render prop if authentication status is respectivel pending, blocked, or
  * resolved.
  */
-import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { appActions } from '@liquid-labs/catalyst-core-ui'
+import { FeedbackContext } from '@liquid-labs/catalyst-core-ui'
 
 import { Await } from '@liquid-labs/catalyst-core-ui'
 import { awaitStatus } from '@liquid-labs/react-await'
@@ -38,14 +37,11 @@ const statusCheck = ({resolved, error}) =>
 
 const checks = [statusCheck]
 
-const mapDispatchToProps = (dispatch) => ({
-  errorHandler : (msg) => dispatch(appActions.setErrorMessage(msg))
-})
-
 // TODO: once we refactor the error display stuff to use hooks, we can get rid
 // of the 'connect' (obviously) and make errorHandler overrideable with the
 // AppInfo display as the default.
-const AuthenticationManager = connect(null, mapDispatchToProps)(({errorHandler, blocked, children, ...props}) => {
+const AuthenticationManager = ({blocked, children, ...props}) => {
+  const { addErrorMessage } = useContext(FeedbackContext)
   const [ authenticationStatus, setAuthenticationStatus ] =
     useState(initialAuthenticationState)
 
@@ -66,7 +62,7 @@ const AuthenticationManager = connect(null, mapDispatchToProps)(({errorHandler, 
             if (process.env.NODE_ENV !== 'production') {
               console.warn('Error getting authentication token', error) // eslint-disable-line no-console
             }
-            errorHandler("Could not get token info; login invalidated.")
+            addErrorMessage("Could not get token info; login invalidated.")
             setAuthenticationStatus({
               ...initialAuthenticationState,
               resolved : true,
@@ -91,7 +87,7 @@ const AuthenticationManager = connect(null, mapDispatchToProps)(({errorHandler, 
       </Await>
     </AuthenticationContext.Provider>
   )
-})
+}
 
 if (process.env.NODE_ENV !== 'production') {
   AuthenticationManager.propTypes = {
