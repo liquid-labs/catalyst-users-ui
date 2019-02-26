@@ -4,7 +4,7 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail } from '@liquid-labs/validators'
 
-const LoginForm = ({email, password, emailChange, passwordChange, error, fieldWatcher}) => {
+const LoginForm = ({email, password, emailChange, passwordChange, fieldWatcher}) => {
   const commonFieldProps = {
     required     : true,
     gridded      : {xs : 12},
