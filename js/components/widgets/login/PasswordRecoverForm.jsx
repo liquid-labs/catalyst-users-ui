@@ -4,7 +4,7 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail } from '@liquid-labs/validators'
 
-const PasswordRecoverForm = ({email, emailChange, error, fieldWatcher, showLogin, showRegister}) => {
+const PasswordRecoverForm = ({email, emailChange, fieldWatcher}) => {
   const commonFieldProps = {
     required     : true,
     gridded      : {xs : 12},

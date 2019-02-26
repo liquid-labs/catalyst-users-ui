@@ -21,7 +21,8 @@
     "prepare": "npm run build"
   },
   "peerDependencies": {
-    "@liquid-labs/catalyst-core-ui": "latest",
+    "@liquid-labs/catalyst-core-api": "^1.0.0-prototype.3",
+    "@liquid-labs/catalyst-core-ui": "^1.0.0-prototype.1",
     "@liquid-labs/catalyst-firewrap": "latest",
     "@liquid-labs/catalyst-theme": "latest",
     "@liquid-labs/mui-extensions": "latest",
@@ -40,7 +41,9 @@
     "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "@liquid-labs/catalyst-scripts": "latest",
+    "@liquid-labs/catalyst-core-api": "^1.0.0-prototype.3",
+    "@liquid-labs/catalyst-core-ui": "^1.0.0-prototype.1",
+    "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.12",
     "lodash.pick": "^4.4.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"

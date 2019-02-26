@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { AuthenticationContext } from '../util/AuthenticationManager'
+import { AuthenticationContext } from '@liquid-labs/catalyst-core-ui'
 
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'

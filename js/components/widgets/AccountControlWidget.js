@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react'
 
-import PropTypes from 'prop-types'
-
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { AuthenticationContext } from '../util/AuthenticationManager'
+import { AuthenticationContext } from '@liquid-labs/catalyst-core-ui'
 import { AuthenticationDialog } from './AuthenticationDialog'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'

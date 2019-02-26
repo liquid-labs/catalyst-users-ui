@@ -6,7 +6,7 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
-export const RegisterForm = ({username, email, password, passwordVerify, usernameChange, emailChange, passwordChange, passwordVerifyChange, error, fieldWatcher, showLogin, showRecoverPassword}) => {
+export const RegisterForm = ({ username, email, password, passwordVerify, usernameChange, emailChange, passwordChange, passwordVerifyChange, fieldWatcher }) => {
   const commonFieldProps = {
     required     : true,
     gridded      : {xs : 12},
