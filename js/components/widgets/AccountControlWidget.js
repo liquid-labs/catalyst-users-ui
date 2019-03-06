@@ -24,7 +24,7 @@ const AccountControlWidget = withRouter(({ history }) => {
     }
     const menuProfile = () => {
       closeMenu()
-      history.push('/users/self/profile')
+      history.push('/persons/self')
     }
     return (
       <div key="profileControls">
