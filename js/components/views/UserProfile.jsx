@@ -13,8 +13,8 @@ const UserProfile = ({location}) => {
   return (
     <AccessChecker check={accessCond}>
       <BasicContentFrame AppNavigationProps={{ logoTo : '/', rightChildren : <AccountControlWidget /> }}>
-        <ItemFetcher itemUrl={location.pathname}>
-          {({item}) => <Person person={item} />}
+        <ItemFetcher itemUrl={location.pathname} itemKey='person'>
+          {({person}) => <Person person={person} />}
         </ItemFetcher>
       </BasicContentFrame>
     </AccessChecker>
