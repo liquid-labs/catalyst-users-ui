@@ -1,3 +1,4 @@
+import React from 'react'
 import { CardContainer, SectionGrid } from '@liquid-labs/mui-extensions'
 import { ContentHeader } from '@liquid-labs/catalyst-theme'
 import { ValidInput } from '@liquid-labs/react-validation'
