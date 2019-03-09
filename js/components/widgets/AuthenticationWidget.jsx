@@ -20,6 +20,18 @@ const LOGIN_VIEW = 'login'
 const REGISTER_VIEW = 'register'
 const RECOVER_PASSWORD_VIEW = 'recover'
 
+const register = async(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush) => {
+  try {
+    await fireauth.createUserWithEmailAndPassword(email, password)
+    resetAuthForm()
+    resetContext()
+    postAuthPush()
+  }
+  catch (error) {
+    setRemoteError(error)
+  }
+}
+
 const AuthenticationWidget =
 withRouter(
   withFieldWatcher()(({xs, fieldWatcher, onClose, defaultPostAuthDestination,
@@ -27,15 +39,15 @@ withRouter(
     ...formProps}) => {
 
     const [ view, setView ] = useState(LOGIN_VIEW)
-    const [ username, setUsername ] = useState('')
+    const [ displayName, setDisplayName ] = useState('')
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ passwordVerify, setPasswordVerify ] = useState('')
     const [ remoteError, setRemoteError ] = useState('')
 
-    const usernameChange = useCallback(
-      (event) => setUsername(extractValue(event)),
-      [setUsername])
+    const displayNameChange = useCallback(
+      (event) => setDisplayName(extractValue(event)),
+      [setDisplayName])
     const emailChange = useCallback(
       (event) => setEmail(extractValue(event)),
       [setEmail])
@@ -44,25 +56,25 @@ withRouter(
       [setPassword])
     const passwordVerifyChange = useCallback(
       (event) => setPasswordVerify(extractValue(event)), [setPasswordVerify])
-    const resetAuthentication = useCallback(() => {
+    const resetAuthForm = useCallback(() => {
       setView(LOGIN_VIEW)
-      setUsername('')
+      setDisplayName('')
       setEmail('')
       setPassword('')
       setPasswordVerify('')
       setRemoteError('')
     },
-    [setView, setUsername, setEmail, setPassword, setPasswordVerify, setRemoteError])
+    [setView, setDisplayName, setEmail, setPassword, setPasswordVerify, setRemoteError])
 
     const showLogin = useCallback((event) => {
       setView(LOGIN_VIEW)
       event.preventDefault()
     }, [setView])
-    const showRegister = ((event) => {
+    const showRegister = useCallback((event) => {
       setView(REGISTER_VIEW)
       event.preventDefault()
     }, [setView])
-    const showRecoverPassword = ((event) => {
+    const showRecoverPassword = useCallback((event) => {
       setView(RECOVER_PASSWORD_VIEW)
       event.preventDefault()
     }, [setView])
@@ -83,7 +95,7 @@ withRouter(
     const onLogin = useCallback((event) => {
       fireauth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          resetAuthentication()
+          resetAuthForm()
           resetContext()
           postAuthPush()
         })
@@ -92,31 +104,22 @@ withRouter(
         })
 
       event.preventDefault()
-    }, [email, password, history, resetAuthentication, postAuthPush, resetContext, setRemoteError])
+    }, [email, password, history, resetAuthForm, postAuthPush, resetContext, setRemoteError])
     const onRecoverPassword = useCallback((event) => {
       fireauth.sendPasswordResetEmail(email)
         .then(() => {
-          resetAuthentication()
+          resetAuthForm()
         })
         .catch(error => {
           setRemoteError(error)
         })
 
       event.preventDefault()
-    }, [email, setRemoteError, resetAuthentication])
+    }, [email, setRemoteError, resetAuthForm])
     const onRegister = useCallback((event) => {
-      fireauth.createUserWithEmailAndPassword(email, password, username)
-        .then(() => {
-          resetAuthentication()
-          resetContext()
-          postAuthPush()
-        })
-        .catch(error => {
-          setRemoteError(error)
-        })
-
+      register(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush)
       event.preventDefault()
-    }, [username, email, password, resetAuthentication, resetContext, setRemoteError, postAuthPush, history])
+    }, [displayName, email, password, resetAuthForm, resetContext, setRemoteError, postAuthPush])
 
     const [ onSubmit, submitLabel ] = view === LOGIN_VIEW
       ? [ onLogin, "Log In" ]
@@ -124,8 +127,8 @@ withRouter(
         ? [ onRecoverPassword, "Recover Password" ]
         : [ onRegister, "Register" ]
 
-    formProps = Object.asign({
-      username       : username,
+    formProps = Object.assign({
+      displayName    : displayName,
       email          : email,
       password       : password,
       passwordVerify : passwordVerify
@@ -150,7 +153,7 @@ withRouter(
             {...formProps} /> }
         { view === REGISTER_VIEW
         && <RegisterForm fieldWatcher={fieldWatcher}
-            username={username} usernameChange={usernameChange}
+            displayName={displayName} displayNameChange={displayNameChange}
             email={email} emailChange={emailChange}
             password={password} passwordChange={passwordChange}
             passwordVerify={passwordVerify} passwordVerifyChange={passwordVerifyChange}
@@ -163,7 +166,7 @@ withRouter(
         </Grid>
         <Grid item xs={12} key="authenticationCancel">
           <Button color="secondary" variant="outlined" style={{width : '100%'}}
-              onClick={() => onClose()}>
+              onClick={onClose}>
           Cancel
           </Button>
         </Grid>
@@ -187,9 +190,6 @@ if (process.env.NODE_ENV !== 'production') {
   AuthenticationWidget.propTypes = {
     defaultPostAuthDestination : PropTypes.string, // TODO: use path regex?
     xs                         : PropTypes.oneOf([1,2,3,4,5,6,7,8,9,10,11,12]),
-    fieldWatcher               : PropTypes.object.isRequired,
-    history                    : PropTypes.object.isRequired,
-    location                   : PropTypes.object.isRequired,
     onClose                    : PropTypes.func.isRequired
   }
 }

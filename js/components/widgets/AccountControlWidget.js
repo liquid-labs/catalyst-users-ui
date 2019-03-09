@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { AuthenticationContext } from '@liquid-labs/catalyst-core-ui'
+import { useAuthenticationStatus, useAuthenticationAPI } from '@liquid-labs/catalyst-core-ui'
 import { AuthenticationDialog } from './AuthenticationDialog'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
@@ -12,7 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { withRouter } from 'react-router-dom'
 
 const AccountControlWidget = withRouter(({ history }) => {
-  const { authUser, logOut } = useContext(AuthenticationContext)
+  const { authUser } = useAuthenticationStatus()
+  const { logOut } = useAuthenticationAPI()
   const [ menuAnchor, setMenuAnchor ] = useState(null)
   const [ authenticationDialogOpen, setAuthenticationDialogOpen ] = useState(false)
 
@@ -24,7 +25,7 @@ const AccountControlWidget = withRouter(({ history }) => {
     }
     const menuProfile = () => {
       closeMenu()
-      history.push('/persons/self')
+      history.push('/persons/self/')
     }
     return (
       <div key="profileControls">
