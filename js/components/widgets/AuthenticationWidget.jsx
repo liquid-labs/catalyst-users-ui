@@ -9,6 +9,8 @@ import { PasswordRecoverForm } from './login/PasswordRecoverForm'
 import { RegisterForm } from './login/RegisterForm'
 import Typography from '@material-ui/core/Typography'
 
+import { useAuthenticationAPI } from '@liquid-labs/catalyst-core-ui'
+
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
 
@@ -20,15 +22,21 @@ const LOGIN_VIEW = 'login'
 const REGISTER_VIEW = 'register'
 const RECOVER_PASSWORD_VIEW = 'recover'
 
-const register = async(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush) => {
+const register = async(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush, authenticationAPI) => {
+  const userAuthCreation =
+    fireauth.createUserWithEmailAndPassword(email, password, displayName)
   try {
-    await fireauth.createUserWithEmailAndPassword(email, password)
+    authenticationAPI.addPostAuthGate(userAuthCreation)
+    await userAuthCreation
     resetAuthForm()
     resetContext()
     postAuthPush()
   }
   catch (error) {
     setRemoteError(error)
+  }
+  finally {
+    authenticationAPI.removePostAuthGate(userAuthCreation)
   }
 }
 
@@ -44,6 +52,7 @@ withRouter(
     const [ password, setPassword ] = useState('')
     const [ passwordVerify, setPasswordVerify ] = useState('')
     const [ remoteError, setRemoteError ] = useState('')
+    const authenticationAPI = useAuthenticationAPI()
 
     const displayNameChange = useCallback(
       (event) => setDisplayName(extractValue(event)),
@@ -117,7 +126,7 @@ withRouter(
       event.preventDefault()
     }, [email, setRemoteError, resetAuthForm])
     const onRegister = useCallback((event) => {
-      register(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush)
+      register(email, password, displayName, setRemoteError, resetAuthForm, resetContext, postAuthPush, authenticationAPI)
       event.preventDefault()
     }, [displayName, email, password, resetAuthForm, resetContext, setRemoteError, postAuthPush])
 
