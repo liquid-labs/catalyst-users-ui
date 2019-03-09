@@ -6,7 +6,7 @@ import { ValidInput } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
-export const RegisterForm = ({ username, email, password, passwordVerify, usernameChange, emailChange, passwordChange, passwordVerifyChange, fieldWatcher }) => {
+export const RegisterForm = ({ displayName, email, password, passwordVerify, displayNameChange, emailChange, passwordChange, passwordVerifyChange, fieldWatcher }) => {
   const commonFieldProps = {
     required     : true,
     gridded      : {xs : 12},
@@ -14,11 +14,11 @@ export const RegisterForm = ({ username, email, password, passwordVerify, userna
   }
 
   return [
-    <ValidInput key="usernameInput"
-        label="Username"
-        propName="username"
-        value={username}
-        onChange={usernameChange}
+    <ValidInput key="displayNameInput"
+        label="Display Name"
+        propName="displayName"
+        value={displayName}
+        onChange={displayNameChange}
         {...commonFieldProps}
       />,
     <ValidInput key="emailInput"
@@ -48,11 +48,11 @@ export const RegisterForm = ({ username, email, password, passwordVerify, userna
 }
 
 RegisterForm.propTypes = {
-  username             : PropTypes.string.isRequired,
+  displayName          : PropTypes.string.isRequired,
   email                : PropTypes.string.isRequired,
   password             : PropTypes.string.isRequired,
   passwordVerify       : PropTypes.string.isRequired,
-  usernameChange       : PropTypes.func.isRequired,
+  displayNameChange    : PropTypes.func.isRequired,
   emailChange          : PropTypes.func.isRequired,
   passwordChange       : PropTypes.func.isRequired,
   passwordVerifyChange : PropTypes.func.isRequired,
