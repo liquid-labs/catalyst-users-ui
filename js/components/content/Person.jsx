@@ -3,7 +3,7 @@ import { CardContainer, SectionGrid } from '@liquid-labs/mui-extensions'
 import { ContentHeader } from '@liquid-labs/catalyst-theme'
 import { ValidInput } from '@liquid-labs/react-validation'
 
-const Person = (person) =>
+const Person = ({person}) =>
   <>
     <ContentHeader>{person.email}</ContentHeader>
     <CardContainer>
