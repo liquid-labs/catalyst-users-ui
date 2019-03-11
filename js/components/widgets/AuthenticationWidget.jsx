@@ -9,12 +9,11 @@ import { PasswordRecoverForm } from './login/PasswordRecoverForm'
 import { RegisterForm } from './login/RegisterForm'
 import Typography from '@material-ui/core/Typography'
 
-import { useAuthenticationAPI } from '@liquid-labs/catalyst-core-ui'
+import { useAuthenticationAPI, AppContext } from '@liquid-labs/catalyst-core-ui'
 
 import { withFieldWatcher } from '@liquid-labs/react-validation'
 import { withRouter } from 'react-router-dom'
 
-import { AppContext } from '@liquid-labs/catalyst-core-ui'
 import { fireauth } from '@liquid-labs/catalyst-firewrap'
 import qs from 'query-string'
 
