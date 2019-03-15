@@ -14,13 +14,13 @@ const sendingStatusCheck = [({sendingStatus, errorMessage, setSendingStatus}) =>
       // TODO: this currently relies on the 'Feedback' popping up the full
       // message. Which is fine, but for robustness, would be nice to use
       // '...' overflow wrapper with abaility to hover and get full message.
-      ? { summary      : <span>
-          {'Error sending email. '}
-          <Link onClick={() => setSendingStatus(waiterStatus.RESOLVED)}>
+      ? { summary : <span>
+        {'Error sending email. '}
+        <Link onClick={() => setSendingStatus(waiterStatus.RESOLVED)}>
             Dismiss
-          </Link>
-        </span>,
-        errorMessage : errorMessage }
+        </Link>
+      </span>,
+      errorMessage : errorMessage }
       : sendingStatus === waiterStatus.WAITING
         ? { summary : `Sending email...` }
         : {}
@@ -51,7 +51,7 @@ const VerifyEmailLink = ({authUser}) => {
     <Waiter name="Sending email verification"
         checks={sendingStatusCheck}
         checkProps={checkProps}
-        tiny={true}>
+        tiny>
       <Link style={{ cursor : 'pointer' }} onClick={sendEmailVerification}>
         Send verification email...
       </Link>

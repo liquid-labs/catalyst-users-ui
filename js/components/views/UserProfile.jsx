@@ -3,24 +3,55 @@ import PropTypes from 'prop-types'
 
 import { AccessChecker } from '../util/AccessChecker'
 import { AccountControlWidget } from '../widgets/AccountControlWidget'
-import { BasicContentFrame, ItemFetcher, useAuthenticationStatus } from '@liquid-labs/catalyst-core-ui'
+import {
+  BasicContentFrame,
+  ItemContext,
+  ItemControls,
+  ItemFetcher,
+  useAuthenticationStatus,
+  useItemContextAPI } from '@liquid-labs/catalyst-core-ui'
+
+import { ValidationContext, useValidationContextAPI } from '@liquid-labs/react-validation'
+
+import omit from 'lodash.omit'
 import { Person } from '../content/Person'
 
 const accessCond = ({authUser}) => Boolean(authUser)
 
-const UserProfile = ({location}) => {
+const ItemContentFrame = ({location, ItemControlsProps}) => {
   const { authUser } = useAuthenticationStatus()
+  const itemContextAPI = useItemContextAPI()
+  const validationContextAPI = useValidationContextAPI()
+
   return (
-    <AccessChecker check={accessCond}>
-      <BasicContentFrame AppNavigationProps={{ logoTo : '/', rightChildren : <AccountControlWidget /> }}>
-        <ItemFetcher itemUrl={location.pathname} itemKey='person'>
-          {({person}) =>
-            <Person person={person} authUser={authUser} />}
-        </ItemFetcher>
-      </BasicContentFrame>
-    </AccessChecker>
+    <BasicContentFrame
+        navLogoTo={'/'}
+        navChildren={(<ItemControls/>)}
+        navShowChildren={itemContextAPI.isItemReady}
+        navRightChildren={<AccountControlWidget />}>
+      <ItemFetcher itemUrl={location.pathname} itemKey='person'>
+        {({person}) =>
+          <Person person={person} authUser={authUser} />}
+      </ItemFetcher>
+    </BasicContentFrame>
   )
 }
+
+if (process.env.NODE_ENV !== 'production') {
+  ItemContentFrame.propTypes = {
+    ItemControlsProps : PropTypes.object,
+    location : PropTypes.object.isRequired,
+  }
+}
+
+const UserProfile = (props) =>
+  <AccessChecker check={accessCond}>
+    <ItemContext>
+      <ValidationContext>
+        <ItemContentFrame {...props} />
+      </ValidationContext>
+    </ItemContext>
+  </AccessChecker>
 
 if (process.env.NODE_ENV !== 'production') {
   UserProfile.propTypes = {

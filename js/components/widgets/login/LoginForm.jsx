@@ -17,7 +17,7 @@ const LoginForm = ({email, password, emailChange, passwordChange, fieldWatcher})
         label="Email"
         value={email}
         onChange={emailChange}
-        validate={isEmail}
+        validators={isEmail}
         {...commonFieldProps}
     />,
     <ValidInput key="passwordInput"

@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { ValidInput } from '@liquid-labs/react-validation'
+import { ValidInput, useValidationContextAPI } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
 export const RegisterForm = ({ displayName, email, password, passwordVerify, displayNameChange, emailChange, passwordChange, passwordVerifyChange, fieldWatcher }) => {
+  const vcAPI = useValidationContextAPI()
+  useEffect(() => {
+    const validator =
+      vcAPI.addContextValidator('passwordVerify', // show error here
+        fieldsMatch('password', 'passwordVerify'),
+        ['password', 'passwordVerify']) // trigger fields
+
+    return () => vcAPI.removeContextValidator(validator)
+  }, [])
+
   const commonFieldProps = {
     required     : true,
     gridded      : {xs : 12},
@@ -17,31 +27,22 @@ export const RegisterForm = ({ displayName, email, password, passwordVerify, dis
     <ValidInput key="displayNameInput"
         label="Display Name"
         propName="displayName"
-        value={displayName}
-        onChange={displayNameChange}
         {...commonFieldProps}
       />,
     <ValidInput key="emailInput"
         label="Email"
-        value={email}
-        onChange={emailChange}
-        validate={isEmail}
+        validators={isEmail}
         {...commonFieldProps}
       />,
     <ValidInput key="passwordInput"
         label="Password"
-        value={password}
         type="password"
-        onChange={passwordChange}
         {...commonFieldProps}
       />,
     <ValidInput key="passwordVerify"
         label="Confirm password"
         propName="passwordVerify"
-        value={passwordVerify}
         type="password"
-        onChange={passwordVerifyChange}
-        validate={fieldsMatch('Passwords', password)}
         {...commonFieldProps}
       />,
   ]

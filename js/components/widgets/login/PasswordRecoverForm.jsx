@@ -17,7 +17,7 @@ const PasswordRecoverForm = ({email, emailChange, fieldWatcher}) => {
         label="Email"
         value={email}
         onChange={emailChange}
-        validate={isEmail}
+        validators={isEmail}
         {...commonFieldProps}
     />,
   ]
