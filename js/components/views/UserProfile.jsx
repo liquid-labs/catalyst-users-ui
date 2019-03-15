@@ -25,7 +25,7 @@ const ItemContentFrame = ({location, ItemControlsProps}) => {
     <BasicContentFrame
         navLogoTo={'/'}
         navChildren={(<ItemControls />)}
-        navShowChildren={itemContextAPI.isItemReady}
+        navShowChildren={itemContextAPI.isItemReady()}
         navRightChildren={<AccountControlWidget />}>
       <ItemFetcher itemUrl={location.pathname} itemKey='person'>
         {({person}) =>
