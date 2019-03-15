@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 
-import PropTypes from 'prop-types'
-
 import { ValidInput, useValidationContextAPI } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
-export const RegisterForm = ({ displayName, email, password, passwordVerify, displayNameChange, emailChange, passwordChange, passwordVerifyChange, fieldWatcher }) => {
+export const RegisterForm = () => {
   const vcAPI = useValidationContextAPI()
   useEffect(() => {
     const validator =
@@ -18,9 +16,8 @@ export const RegisterForm = ({ displayName, email, password, passwordVerify, dis
   }, [])
 
   const commonFieldProps = {
-    required     : true,
-    gridded      : {xs : 12},
-    fieldWatcher : fieldWatcher
+    required : true,
+    gridded  : {xs : 12},
   }
 
   return [
@@ -46,15 +43,4 @@ export const RegisterForm = ({ displayName, email, password, passwordVerify, dis
         {...commonFieldProps}
       />,
   ]
-}
-
-RegisterForm.propTypes = {
-  displayName          : PropTypes.string.isRequired,
-  email                : PropTypes.string.isRequired,
-  password             : PropTypes.string.isRequired,
-  passwordVerify       : PropTypes.string.isRequired,
-  displayNameChange    : PropTypes.func.isRequired,
-  emailChange          : PropTypes.func.isRequired,
-  passwordChange       : PropTypes.func.isRequired,
-  passwordVerifyChange : PropTypes.func.isRequired,
 }

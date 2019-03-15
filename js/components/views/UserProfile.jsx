@@ -11,9 +11,8 @@ import {
   useAuthenticationStatus,
   useItemContextAPI } from '@liquid-labs/catalyst-core-ui'
 
-import { ValidationContext, useValidationContextAPI } from '@liquid-labs/react-validation'
+import { ValidationContext } from '@liquid-labs/react-validation'
 
-import omit from 'lodash.omit'
 import { Person } from '../content/Person'
 
 const accessCond = ({authUser}) => Boolean(authUser)
@@ -21,12 +20,11 @@ const accessCond = ({authUser}) => Boolean(authUser)
 const ItemContentFrame = ({location, ItemControlsProps}) => {
   const { authUser } = useAuthenticationStatus()
   const itemContextAPI = useItemContextAPI()
-  const validationContextAPI = useValidationContextAPI()
 
   return (
     <BasicContentFrame
         navLogoTo={'/'}
-        navChildren={(<ItemControls/>)}
+        navChildren={(<ItemControls />)}
         navShowChildren={itemContextAPI.isItemReady}
         navRightChildren={<AccountControlWidget />}>
       <ItemFetcher itemUrl={location.pathname} itemKey='person'>
@@ -40,7 +38,7 @@ const ItemContentFrame = ({location, ItemControlsProps}) => {
 if (process.env.NODE_ENV !== 'production') {
   ItemContentFrame.propTypes = {
     ItemControlsProps : PropTypes.object,
-    location : PropTypes.object.isRequired,
+    location          : PropTypes.object.isRequired,
   }
 }
 

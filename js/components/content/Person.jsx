@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { CardContainer, SectionGrid } from '@liquid-labs/mui-extensions'
 import { ContentHeader } from '@liquid-labs/catalyst-theme'
@@ -85,5 +86,15 @@ const Person = ({person, authUser}) =>
       </SectionGrid>
     </CardContainer>
   </>
+
+if (process.env.NODE_ENV !== 'production') {
+  Person.propTypes = {
+    authUser : PropTypes.object.isRequired,
+    person   : PropTypes.object.isRequired,
+  }
+  VerifyEmailLink.propTypes = {
+    authUser : PropTypes.object.isRequired,
+  }
+}
 
 export { Person }
