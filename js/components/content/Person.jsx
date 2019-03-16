@@ -60,14 +60,15 @@ const VerifyEmailLink = ({authUser}) => {
   )
 }
 
-const Person = ({person, authUser}) =>
+const Person = ({person, authUser}) => {
+  return (
   <>
     <ContentHeader>{person.email}</ContentHeader>
     <CardContainer>
       <SectionGrid title="General">
         <ValidInput
             label="Display name"
-            value={person.displayName}
+            initialValue={person.displayName}
             maxLength="255"
             gridded={{xs : 12}}
             viewOnly
@@ -77,7 +78,7 @@ const Person = ({person, authUser}) =>
       <SectionGrid title="Authentication">
         <ValidInput
             label="Email verified"
-            value={authUser.emailVerified ? "yes" : "no"}
+            initialValue={authUser.emailVerified ? "yes" : "no"}
             maxLength="3"
             gridded={{xs : 12}}
             viewOnly
@@ -86,6 +87,7 @@ const Person = ({person, authUser}) =>
       </SectionGrid>
     </CardContainer>
   </>
+)}
 
 if (process.env.NODE_ENV !== 'production') {
   Person.propTypes = {
