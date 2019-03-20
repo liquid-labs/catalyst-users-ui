@@ -67,22 +67,22 @@ const Person = ({person, authUser}) => {
     <CardContainer>
       <SectionGrid title="General">
         <ValidInput
-            label="Display name"
-            initialValue={person.displayName}
-            maxLength="255"
-            gridded={{xs : 12}}
-            viewOnly
-            defaultViewValue="<none>"
+          label="Display name"
+          initialValue={person.displayName}
+          maxLength="255"
+          gridded={{xs : 12}}
+          defaultViewValue="<none>"
         />
       </SectionGrid>
       <SectionGrid title="Authentication">
         <ValidInput
-            label="Email verified"
-            initialValue={authUser.emailVerified ? "yes" : "no"}
-            maxLength="3"
-            gridded={{xs : 12}}
-            viewOnly
-            helperText={!authUser.emailVerified ? <VerifyEmailLink authUser={authUser} /> : null}
+          label="Email verified"
+          initialValue={authUser.emailVerified ? "yes" : "no"}
+          maxLength="3"
+          gridded={{xs : 12}}
+          viewOnly
+          noExport
+          helperText={!authUser.emailVerified ? <VerifyEmailLink authUser={authUser} /> : null}
         />
       </SectionGrid>
     </CardContainer>
