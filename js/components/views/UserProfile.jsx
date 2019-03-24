@@ -11,7 +11,7 @@ import {
   useAuthenticationStatus,
   useItemContextAPI } from '@liquid-labs/catalyst-core-ui'
 
-import { ValidationContext, useValidationContextAPI } from '@liquid-labs/react-validation'
+import { ValidationContext } from '@liquid-labs/react-validation'
 
 import { Person } from '../content/Person'
 
@@ -20,12 +20,11 @@ const accessCond = ({authUser}) => Boolean(authUser)
 const ItemContentFrame = ({location, ItemControlsProps}) => {
   const { authUser } = useAuthenticationStatus()
   const itemContextAPI = useItemContextAPI()
-  const vcAPI = useValidationContextAPI()
 
   return (
     <BasicContentFrame
         navLogoTo={'/'}
-        navChildren={(<ItemControls onRevert={() => vcAPI.resetData() }/>)}
+        navChildren={(<ItemControls />)}
         navShowChildren={itemContextAPI.isItemReady()}
         navRightChildren={<AccountControlWidget />}>
       <ItemFetcher itemUrl={location.pathname} itemKey='person'>
