@@ -60,35 +60,33 @@ const VerifyEmailLink = ({authUser}) => {
   )
 }
 
-const Person = ({person, authUser}) => {
-  return (
-    <>
-      <ContentHeader>{person.email}</ContentHeader>
-      <CardContainer>
-        <SectionGrid title="General">
-          <ValidInput
-              label="Display name"
-              initialValue={person.displayName}
-              maxLength="255"
-              gridded={{xs : 12}}
-              defaultViewValue="<none>"
-        />
-        </SectionGrid>
-        <SectionGrid title="Authentication">
-          <ValidInput
-              label="Email verified"
-              initialValue={authUser.emailVerified ? "yes" : "no"}
-              maxLength="3"
-              gridded={{xs : 12}}
-              viewOnly
-              noExport
-              helperText={!authUser.emailVerified ? <VerifyEmailLink authUser={authUser} /> : null}
-        />
-        </SectionGrid>
-      </CardContainer>
-    </>
-  )
-}
+// TODO https://github.com/Liquid-Labs/catalyst-users-ui/issues/13
+const Person = ({person, authUser}) =>
+  <>
+    <ContentHeader>{person.email}</ContentHeader>
+    <CardContainer>
+      <SectionGrid title="General">
+        <ValidInput
+            label="Display name"
+            initialValue={person.displayName}
+            maxLength="255"
+            gridded={{xs : 12}}
+            defaultViewValue="<none>"
+      />
+      </SectionGrid>
+      <SectionGrid title="Authentication">
+        <ValidInput
+            label="Email status"
+            initialValue={authUser.emailVerified ? "email verified" : "verification required"}
+            maxLength="3"
+            gridded={{xs : 12}}
+            viewOnly
+            noExport
+            helperText={!authUser.emailVerified ? <VerifyEmailLink authUser={authUser} /> : null}
+      />
+      </SectionGrid>
+    </CardContainer>
+  </>
 
 if (process.env.NODE_ENV !== 'production') {
   Person.propTypes = {
