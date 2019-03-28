@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
-import { ValidInput, useValidationContextAPI } from '@liquid-labs/react-validation'
+import { ValidInput, useValidationAPI } from '@liquid-labs/react-validation'
 
 import { isEmail, fieldsMatch } from '@liquid-labs/validators'
 
 export const RegisterForm = () => {
-  const vcAPI = useValidationContextAPI()
+  const vcAPI = useValidationAPI()
   useEffect(() => {
     const validator =
       vcAPI.addContextValidator('passwordVerify', // show error here

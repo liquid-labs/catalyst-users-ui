@@ -8,7 +8,7 @@ import { LoginForm } from './login/LoginForm'
 import { PasswordRecoverForm } from './login/PasswordRecoverForm'
 import { RegisterForm } from './login/RegisterForm'
 import Typography from '@material-ui/core/Typography'
-import { ValidationContext, useValidationContextAPI } from '@liquid-labs/react-validation'
+import { ValidationContext, useValidationAPI } from '@liquid-labs/react-validation'
 
 import { useAuthenticationAPI, AppContext } from '@liquid-labs/catalyst-core-ui'
 
@@ -43,7 +43,7 @@ const AuthenticationWidgetGuts = withRouter(
     ...formProps}) => {
 
     const authenticationAPI = useAuthenticationAPI()
-    const vcAPI = useValidationContextAPI()
+    const vcAPI = useValidationAPI()
 
     const [ view, setView ] = useState(LOGIN_VIEW)
     const [ remoteError, setRemoteError ] = useState('')

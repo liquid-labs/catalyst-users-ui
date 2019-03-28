@@ -44,11 +44,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 const UserProfile = (props) =>
   <AccessChecker check={accessCond}>
-    <ItemContext>
-      <ValidationContext>
+    <ValidationContext>
+      <ItemContext>
         <ItemContentFrame {...props} />
-      </ValidationContext>
-    </ItemContext>
+      </ItemContext>
+    </ValidationContext>
   </AccessChecker>
 
 if (process.env.NODE_ENV !== 'production') {
