@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import { AuthenticationContext } from '@liquid-labs/catalyst-core-ui'
+import { useAuthenticationAPI, useAuthenticationStatus } from '@liquid-labs/catalyst-core-ui'
 
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 const LogoutButton = (iconProps, props) => {
-  const { authUser, logOut } = useContext(AuthenticationContext)
+  const { authUser } = useAuthenticationStatus()
+  const { logOut } = useAuthenticationAPI()
   return (
     <IconButton onClick={() => logOut()} disabled={Boolean(authUser)} {...props}>
       <ExitToAppIcon {...iconProps} />

@@ -5,7 +5,7 @@ import { bindOnInputChange, getFieldWatcher } from '@liquid-labs/react-validatio
 import pick from 'lodash.pick'
 
 const INITIAL_STATE = {
-  username    : '',
+  displayName : '',
   email       : '',
   passwordOne : '',
   passwordTwo : '',
@@ -24,7 +24,7 @@ class RegisterBase extends Component {
   }
 
   render() {
-    const stateVars = pick(this.state, 'email', 'username', 'passwordOne', 'passwordTwo', 'error');
+    const stateVars = pick(this.state, 'email', 'displayName', 'passwordOne', 'passwordTwo', 'error');
     return <RegisterForm {...stateVars}
         fieldWatcher={this.fieldWatcher}
         onInputChange={this.onInputChange} />

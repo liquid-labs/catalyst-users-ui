@@ -1,45 +1,60 @@
-import React, { useContext } from 'react'
-
-import { AccountControlWidget } from '../widgets/AccountControlWidget'
-import { AuthenticationContext, BasicContentFrame } from '@liquid-labs/catalyst-core-ui'
-import { CardContainer, SectionGrid } from '@liquid-labs/mui-extensions'
-import { ContentHeader } from '@liquid-labs/catalyst-theme'
-import { ValidInput } from '@liquid-labs/react-validation'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { AccessChecker } from '../util/AccessChecker'
+import { AccountControlWidget } from '../widgets/AccountControlWidget'
+import {
+  BasicContentFrame,
+  ItemContext,
+  ItemControls,
+  ItemFetcher,
+  useAuthenticationStatus,
+  useItemContextAPI } from '@liquid-labs/catalyst-core-ui'
+
+import { ValidationContext } from '@liquid-labs/react-validation'
+
+import { Person } from '../content/Person'
 
 const accessCond = ({authUser}) => Boolean(authUser)
 
-const UserProfile = () => {
-  const { authUser } = useContext(AuthenticationContext)
+const ItemContentFrame = ({location, ItemControlsProps}) => {
+  const { authUser } = useAuthenticationStatus()
+  const itemContextAPI = useItemContextAPI()
+
   return (
-    <AccessChecker check={accessCond}>
-      <BasicContentFrame AppNavigationProps={{ logoTo : '/', rightChildren : <AccountControlWidget /> }}>
-        <ContentHeader>{authUser.email}</ContentHeader>
-        <CardContainer>
-          <SectionGrid title="General">
-            <ValidInput
-                label="Display name"
-                value={authUser.displayName}
-                maxLength="255"
-                gridded={{xs : 12}}
-                viewOnly
-                defaultViewValue="<none>"
-            />
-          </SectionGrid>
-          <SectionGrid title="Authentication">
-            <ValidInput
-                label="Email verified"
-                value={authUser.emailVerified ? "yes" : "no"}
-                maxLength="3"
-                gridded={{xs : 12}}
-                viewOnly
-            />
-          </SectionGrid>
-        </CardContainer>
-      </BasicContentFrame>
-    </AccessChecker>
+    <BasicContentFrame
+        navLogoTo={'/'}
+        navChildren={(<ItemControls />)}
+        navShowChildren={itemContextAPI.isItemReady()}
+        navRightChildren={<AccountControlWidget />}>
+      <ItemFetcher itemUrl={location.pathname} itemKey='person'>
+        {({person}) =>
+          <Person person={person} authUser={authUser} />}
+      </ItemFetcher>
+    </BasicContentFrame>
   )
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  ItemContentFrame.propTypes = {
+    ItemControlsProps : PropTypes.object,
+    location          : PropTypes.object.isRequired,
+  }
+}
+
+const UserProfile = (props) =>
+  <AccessChecker check={accessCond}>
+    <ValidationContext>
+      <ItemContext>
+        <ItemContentFrame {...props} />
+      </ItemContext>
+    </ValidationContext>
+  </AccessChecker>
+
+if (process.env.NODE_ENV !== 'production') {
+  UserProfile.propTypes = {
+    location : PropTypes.object.isRequired
+  }
 }
 
 export { UserProfile }
