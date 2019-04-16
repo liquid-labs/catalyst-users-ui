@@ -49,7 +49,7 @@ const AuthenticationWidgetGuts = withRouter(
     const [ remoteError, setRemoteError ] = useState('')
 
     const resetAuthForm = () => {
-      vcAPI.updateData({})
+      vcAPI.resetData()
       setView(LOGIN_VIEW)
       setRemoteError('')
     }
