@@ -38,7 +38,6 @@ const AccountControlWidget = withRouter(({ history }) => {
             onClose={closeMenu}
         >
           <MenuItem onClick={menuProfile}>Profile</MenuItem>
-          <Divider />
           <MenuItem onClick={menuLogout}>Logout</MenuItem>
         </Menu>
       </div>
