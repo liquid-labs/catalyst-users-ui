@@ -1,7 +1,7 @@
 {
   "name": "@liquid-labs/catalyst-users-ui",
   "homepage": "https://zanerock.github.io/@liquid-labs/catalyst-users",
-  "version": "1.0.0-prototype.0",
+  "version": "1.0.0-prototype.2",
   "description": "API and UI enabling user common user features such as login and account management.",
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "ISC",
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@liquid-labs/catalyst-core-api": "^1.0.0-prototype.6",
-    "@liquid-labs/catalyst-core-ui": "^1.0.0-prototype.6",
+    "@liquid-labs/catalyst-core-ui": "^1.0.0-prototype.7",
     "@liquid-labs/catalyst-firewrap": "^2.0.0-prototype.1",
     "@liquid-labs/catalyst-persons-api": "^1.0.0-prototype.4",
     "@liquid-labs/catalyst-scripts": "^1.0.0-alpha.17",
