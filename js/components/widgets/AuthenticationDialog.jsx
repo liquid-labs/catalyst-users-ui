@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { AuthenticationWidget } from './AuthenticationWidget'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
+import FocusTrap from 'focus-trap-react'
 import Grid from '@material-ui/core/Grid'
 
 import withMobileDialog from '@material-ui/core/withMobileDialog'
@@ -112,12 +113,14 @@ const AuthenticationDialog =
           return (
             <Dialog onClose={onClose} {...remainder}>
               <DialogContent className={classNames(classes.flushTop, layoutDirection === 'landscape' && classes.landscapePadding)}>
-                <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
-                  <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
-                    <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
+                <FocusTrap>
+                  <Grid container spacing={0} direction={layoutDirection === 'portrait' ? 'column' : 'row'}>
+                    <Grid item xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 2} style={{textAlign : 'center'}}>
+                      <img style={{width : logoWidth, height : 'auto'}} src={logoUrl} />
+                    </Grid>
+                    <AuthenticationWidget onClose={onClose} xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
                   </Grid>
-                  <AuthenticationWidget onClose={onClose} xs={layoutDirection === 'portrait' ? 12 : logoSize === 'large' ? 6 : 10} />
-                </Grid>
+                </FocusTrap>
               </DialogContent>
             </Dialog>
           )
