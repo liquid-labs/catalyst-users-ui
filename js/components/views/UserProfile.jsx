@@ -23,10 +23,8 @@ const ItemContentFrame = ({location, ItemControlsProps}) => {
 
   return (
     <BasicContentFrame AppNavigationProps={{
-      logoTo : '/',
       children : <ItemControls />,
-      showChildren : itemContextAPI.isItemReady(),
-      rightChildren : <AccountControlWidget />
+      showChildren : itemContextAPI.isItemReady()
     }}>
       <ItemFetcher itemUrl={location.pathname} itemKey='person'>
         {({person}) =>
