@@ -22,11 +22,12 @@ const ItemContentFrame = ({location, ItemControlsProps}) => {
   const itemContextAPI = useItemContextAPI()
 
   return (
-    <BasicContentFrame
-        navLogoTo={'/'}
-        navChildren={(<ItemControls />)}
-        navShowChildren={itemContextAPI.isItemReady()}
-        navRightChildren={<AccountControlWidget />}>
+    <BasicContentFrame AppNavigationProps={{
+      logoTo : '/',
+      children : <ItemControls />,
+      showChildren : itemContextAPI.isItemReady(),
+      rightChildren : <AccountControlWidget />
+    }}>
       <ItemFetcher itemUrl={location.pathname} itemKey='person'>
         {({person}) =>
           <Person person={person} authUser={authUser} />}
