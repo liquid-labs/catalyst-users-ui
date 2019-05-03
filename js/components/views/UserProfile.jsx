@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { AccessChecker } from '../util/AccessChecker'
 import { AccountControlWidget } from '../widgets/AccountControlWidget'
 import {
-  BasicContentFrame,
   ItemContext,
   ItemControls,
   ItemFetcher,
+  useAppControlsAPI,
   useAuthenticationStatus,
   useItemContextAPI } from '@liquid-labs/catalyst-core-ui'
 
@@ -19,18 +19,19 @@ const accessCond = ({authUser}) => Boolean(authUser)
 
 const ItemContentFrame = ({location, ItemControlsProps}) => {
   const { authUser } = useAuthenticationStatus()
+  const { appCtrlsAPI } = useAppControlsAPI()
   const itemContextAPI = useItemContextAPI()
 
+  const isItemReady = itemContextAPI.isItemReady()
+  useMemo(() => {
+    appCtrlsAPI.setControls(isItemReady ? <ItemControls /> : null)
+  }, [ isItemReady ])
+
   return (
-    <BasicContentFrame AppNavigationProps={{
-      children : <ItemControls />,
-      showChildren : itemContextAPI.isItemReady()
-    }}>
-      <ItemFetcher itemUrl={location.pathname} itemKey='person'>
-        {({person}) =>
-          <Person person={person} authUser={authUser} />}
-      </ItemFetcher>
-    </BasicContentFrame>
+    <ItemFetcher itemUrl={location.pathname} itemKey='person'>
+      {({person}) =>
+        <Person person={person} authUser={authUser} />}
+    </ItemFetcher>
   )
 }
 
