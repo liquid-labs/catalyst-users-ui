@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { AccessChecker } from '../util/AccessChecker'
-import { AccountControlWidget } from '../widgets/AccountControlWidget'
 import {
   ItemContext,
   ItemControls,
