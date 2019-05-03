@@ -17,9 +17,9 @@ export const RegisterForm = () => {
 
   const commonFieldProps = {
     initialValue : '',
-    required : true,
-    gridded  : {xs : 12},
-    viewOnly : false,
+    required     : true,
+    gridded      : {xs : 12},
+    viewOnly     : false,
   }
 
   return [

@@ -7,9 +7,9 @@ import { isEmail } from '@liquid-labs/validators'
 const PasswordRecoverForm = () => {
   const commonFieldProps = {
     initialValue : '',
-    required : true,
-    gridded  : {xs : 12},
-    viewOnly : false,
+    required     : true,
+    gridded      : {xs : 12},
+    viewOnly     : false,
   }
 
   return [

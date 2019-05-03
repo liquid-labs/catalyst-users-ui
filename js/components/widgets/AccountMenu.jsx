@@ -60,8 +60,8 @@ const AccountMenu = withRouter(({
 })
 
 AccountMenu.propTypes = {
-  showIcons : PropTypes.bool,
-  closeMenu : PropTypes.func.isRequired,
+  showIcons                : PropTypes.bool,
+  closeMenu                : PropTypes.func.isRequired,
   openAuthenticationDialog : PropTypes.func.isRequired,
 }
 
