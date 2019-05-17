@@ -32,7 +32,7 @@ const UserProfile = ({location, ...props}) => {
         <ItemContext>
           <ItemFetcher itemUrl={location.pathname} itemKey='person'>
             {({person}) =>
-              <Person person={person} authUser={authUser} />}
+              <Person person={person} authUser={authUser} {...props} />}
           </ItemFetcher>
         </ItemContext>
       </ValidationContext>
