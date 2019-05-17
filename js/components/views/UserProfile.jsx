@@ -16,7 +16,7 @@ import { Person } from '../content/Person'
 
 const accessCond = ({authUser}) => Boolean(authUser)
 
-const ItemContentFrame = ({location, ItemControlsProps}) => {
+const UserProfile = ({location, ...props}) => {
   const { authUser } = useAuthenticationStatus()
   const { appCtrlsAPI } = useAppControlsAPI()
   const itemContextAPI = useItemContextAPI()
@@ -27,28 +27,18 @@ const ItemContentFrame = ({location, ItemControlsProps}) => {
   }, [ isItemReady ])
 
   return (
-    <ItemFetcher itemUrl={location.pathname} itemKey='person'>
-      {({person}) =>
-        <Person person={person} authUser={authUser} />}
-    </ItemFetcher>
+    <AccessChecker check={accessCond}>
+      <ValidationContext>
+        <ItemContext>
+          <ItemFetcher itemUrl={location.pathname} itemKey='person'>
+            {({person}) =>
+              <Person person={person} authUser={authUser} />}
+          </ItemFetcher>
+        </ItemContext>
+      </ValidationContext>
+    </AccessChecker>
   )
 }
-
-if (process.env.NODE_ENV !== 'production') {
-  ItemContentFrame.propTypes = {
-    ItemControlsProps : PropTypes.object,
-    location          : PropTypes.object.isRequired,
-  }
-}
-
-const UserProfile = (props) =>
-  <AccessChecker check={accessCond}>
-    <ValidationContext>
-      <ItemContext>
-        <ItemContentFrame {...props} />
-      </ItemContext>
-    </ValidationContext>
-  </AccessChecker>
 
 if (process.env.NODE_ENV !== 'production') {
   UserProfile.propTypes = {
