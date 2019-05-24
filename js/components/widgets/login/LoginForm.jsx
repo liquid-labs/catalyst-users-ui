@@ -6,8 +6,10 @@ import { isEmail } from '@liquid-labs/validators'
 
 const LoginForm = () => {
   const commonFieldProps = {
-    required : true,
-    gridded  : {xs : 12},
+    initialValue : '',
+    required     : true,
+    gridded      : {xs : 12},
+    viewOnly     : false,
   }
 
   return [
