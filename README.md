@@ -1,6 +1,6 @@
 # @liquid-labs/catalyst-users-ui
 
-> API and UI enabling user common user features such as login and account management.
+Standard UI components for UI widgets with pluggable API integration supporting the Liquid User Model (TODO: link).
 
 ![Release:Prototype](https://img.shields.io/badge/release-prototype-red.svg)
 ![Catalyst](https://img.shields.io/badge/catalyst-yes-success.svg)
